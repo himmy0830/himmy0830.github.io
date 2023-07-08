@@ -17,7 +17,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%871.png">
 <meta property="article:published_time" content="2023-07-07T11:29:26.291Z">
-<meta property="article:modified_time" content="2023-07-07T11:46:06.868Z">
+<meta property="article:modified_time" content="2023-07-08T15:16:08.212Z">
 <meta property="article:author" content="张舒宣">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -71,7 +71,7 @@
 			</ul>
 		</nav>
 		<nav>
-			总文章数 5
+			总文章数 6
 		</nav>		
 		<nav class="header-smart-menu">
     		
@@ -180,7 +180,8 @@
       
         <h1 id="时序逻辑计数器与相关语法"><a href="#时序逻辑计数器与相关语法" class="headerlink" title="时序逻辑计数器与相关语法"></a>时序逻辑计数器与相关语法</h1><span id="more"></span>
 
-<h2 id="1-时序逻辑计数器-LED灯交替亮灭"><a href="#1-时序逻辑计数器-LED灯交替亮灭" class="headerlink" title="1.时序逻辑计数器 LED灯交替亮灭"></a>1.时序逻辑计数器 LED灯交替亮灭</h2><p>开发板：ALINX黑金系列AX7020 芯片xc7z020clg400-1</p>
+<h2 id="1-时序逻辑计数器-LED灯交替亮灭"><a href="#1-时序逻辑计数器-LED灯交替亮灭" class="headerlink" title="1.时序逻辑计数器 LED灯交替亮灭"></a>1.时序逻辑计数器 LED灯交替亮灭</h2><p>开发板：ALINX黑金系列AX7020 </p>
+<p>芯片：xc7z020clg400-1</p>
 <h3 id="1-1设计文件"><a href="#1-1设计文件" class="headerlink" title="1.1设计文件"></a>1.1设计文件</h3><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> led_flash(</span><br><span class="line">    Clk,</span><br><span class="line">    Reset_n,</span><br><span class="line">    Led</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">input</span> Clk;</span><br><span class="line">    <span class="keyword">input</span> Reset_n;</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> Led;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">24</span>:<span class="number">0</span>]counter;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//&lt;= 非阻塞赋值</span></span><br><span class="line">    <span class="comment">//减少缩快捷键 Shift + Tab</span></span><br><span class="line">   </span><br><span class="line">    <span class="comment">/*always@(posedge Clk or negedge Reset_n)</span></span><br><span class="line"><span class="comment">    if(!Reset_n)begin</span></span><br><span class="line"><span class="comment">        counter &lt;= 0;</span></span><br><span class="line"><span class="comment">        Led &lt;= 0;</span></span><br><span class="line"><span class="comment">     end </span></span><br><span class="line"><span class="comment">     else if(counter == 2499999)begin</span></span><br><span class="line"><span class="comment">        counter &lt;= 0;</span></span><br><span class="line"><span class="comment">        Led &lt;= !Led;</span></span><br><span class="line"><span class="comment">    end</span></span><br><span class="line"><span class="comment">    else </span></span><br><span class="line"><span class="comment">        counter &lt;= counter + 1&#x27;d1;*/</span></span><br><span class="line">        </span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        counter &lt;= <span class="number">0</span>;</span><br><span class="line">     <span class="keyword">else</span> <span class="keyword">if</span>(counter == <span class="number">24999999</span>)</span><br><span class="line">        counter &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        counter &lt;= counter + <span class="number">1&#x27;d1</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        Led &lt;= <span class="number">0</span>;</span><br><span class="line">     <span class="keyword">else</span> <span class="keyword">if</span>(counter == <span class="number">24999999</span>)</span><br><span class="line">        Led &lt;= !Led;</span><br><span class="line">    <span class="comment">//分开写更好更方便</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
 
 <p>VHDL语句并行触发</p>
@@ -283,6 +284,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2023/07/08/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B04/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          FPGA笔记4
+        
+      </div>
+    </a>
   
   
     <a href="/2023/06/12/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B02/" id="article-nav-older" class="article-nav-link-wrap">
