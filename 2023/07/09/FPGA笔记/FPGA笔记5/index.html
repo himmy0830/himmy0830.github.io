@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives | shuxuan&#39;s blog</title>
+  <title>FPGA笔记5 | shuxuan&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="shuxuan&#39;s blog">
-<meta property="og:url" content="http://example.com/archives/index.html">
+  <meta name="description" content="巧用参数化设计实现4个LED灯的不同频率闪烁">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FPGA笔记5">
+<meta property="og:url" content="http://example.com/2023/07/09/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B05/index.html">
 <meta property="og:site_name" content="shuxuan&#39;s blog">
+<meta property="og:description" content="巧用参数化设计实现4个LED灯的不同频率闪烁">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA5.1.png">
+<meta property="article:published_time" content="2023-07-09T08:24:43.145Z">
+<meta property="article:modified_time" content="2023-07-09T08:33:23.335Z">
 <meta property="article:author" content="张舒宣">
+<meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA5.1.png">
   
     <link rel="alternative" href="/atom.xml" title="shuxuan&#39;s blog" type="application/atom+xml">
   
@@ -151,36 +158,55 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-FPGA笔记/FPGA笔记5" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      FPGA笔记5
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2023" class="archive-year">2023</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/07/09/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B05/" class="archive-article-date">
+
+        
+        <a href="/2023/07/09/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B05/" class="archive-article-date">
   	<time datetime="2023-07-09T08:24:43.145Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-09</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/07/09/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B05/">FPGA笔记5</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="巧用参数化设计实现4个LED灯的不同频率闪烁"><a href="#巧用参数化设计实现4个LED灯的不同频率闪烁" class="headerlink" title="巧用参数化设计实现4个LED灯的不同频率闪烁"></a>巧用参数化设计实现4个LED灯的不同频率闪烁</h1><span id="more"></span>
 
-        <div class="article-info info-on-right">
-          
+<h2 id="1-LED不同频闪烁"><a href="#1-LED不同频闪烁" class="headerlink" title="1.LED不同频闪烁"></a>1.LED不同频闪烁</h2><p>开发板：ALINX黑金系列AX7020 </p>
+<p>芯片：xc7z020clg400-1</p>
+<h3 id="1-1设计文件"><a href="#1-1设计文件" class="headerlink" title="1.1设计文件"></a>1.1设计文件</h3><h4 id="1-1-1led-flash模块"><a href="#1-1-1led-flash模块" class="headerlink" title="1.1.1led_flash模块"></a>1.1.1led_flash模块</h4><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> led_flash(</span><br><span class="line">    Clk,</span><br><span class="line">    Reset_n,</span><br><span class="line">    Led</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">input</span> Clk;</span><br><span class="line">    <span class="keyword">input</span> Reset_n;</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> Led;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">24</span>:<span class="number">0</span>]counter;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">parameter</span> MCNT = <span class="number">24999999</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//&lt;= 非阻塞赋值</span></span><br><span class="line">    <span class="comment">//减少缩快捷键 Shift + Tab</span></span><br><span class="line">   </span><br><span class="line">    <span class="comment">/*always@(posedge Clk or negedge Reset_n)</span></span><br><span class="line"><span class="comment">    if(!Reset_n)begin</span></span><br><span class="line"><span class="comment">        counter &lt;= 0;</span></span><br><span class="line"><span class="comment">        Led &lt;= 0;</span></span><br><span class="line"><span class="comment">     end </span></span><br><span class="line"><span class="comment">     else if(counter == 2499999)begin</span></span><br><span class="line"><span class="comment">        counter &lt;= 0;</span></span><br><span class="line"><span class="comment">        Led &lt;= !Led;</span></span><br><span class="line"><span class="comment">    end</span></span><br><span class="line"><span class="comment">    else </span></span><br><span class="line"><span class="comment">        counter &lt;= counter + 1&#x27;d1;*/</span></span><br><span class="line">        </span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        counter &lt;= <span class="number">0</span>;</span><br><span class="line">     <span class="keyword">else</span> <span class="keyword">if</span>(counter == MCNT)</span><br><span class="line">        counter &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        counter &lt;= counter + <span class="number">1&#x27;d1</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        Led &lt;= <span class="number">0</span>;</span><br><span class="line">     <span class="keyword">else</span> <span class="keyword">if</span>(counter == MCNT)</span><br><span class="line">        Led &lt;= !Led;</span><br><span class="line">    <span class="comment">//分开写更好更方便</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+
+<p>设置MCNT，在之后的例化模块中通过修改MCNT参数来实现设置LED的不同频率</p>
+<h4 id="1-1-2led-flash-fq-test文件"><a href="#1-1-2led-flash-fq-test文件" class="headerlink" title="1.1.2led_flash_fq_test文件"></a>1.1.2led_flash_fq_test文件</h4><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> led_flash_fq_test(</span><br><span class="line">    Clk,</span><br><span class="line">    Reset_n,</span><br><span class="line">    Led</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">input</span> Clk;</span><br><span class="line">    <span class="keyword">input</span> Reset_n;</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">3</span>:<span class="number">0</span>] Led;</span><br><span class="line">    </span><br><span class="line">    led_flash led_flash_fq_inst0(</span><br><span class="line">        <span class="variable">.Clk</span>(Clk),</span><br><span class="line">        <span class="variable">.Reset_n</span>(Reset_n),</span><br><span class="line">        <span class="variable">.Led</span>(Led[<span class="number">0</span>])</span><br><span class="line">    );</span><br><span class="line">    <span class="keyword">defparam</span> led_flash_fq_inst0<span class="variable">.MCNT</span> = <span class="number">2499999</span>;</span><br><span class="line"></span><br><span class="line">    led_flash led_flash_fq_inst1(</span><br><span class="line">        <span class="variable">.Clk</span>(Clk),</span><br><span class="line">        <span class="variable">.Reset_n</span>(Reset_n),</span><br><span class="line">        <span class="variable">.Led</span>(Led[<span class="number">1</span>])</span><br><span class="line">    );</span><br><span class="line">    <span class="keyword">defparam</span> led_flash_fq_inst1<span class="variable">.MCNT</span> =<span class="number">4999999</span>;</span><br><span class="line">    </span><br><span class="line">    led_flash led_flash_fq_inst2(</span><br><span class="line">        <span class="variable">.Clk</span>(Clk),</span><br><span class="line">        <span class="variable">.Reset_n</span>(Reset_n),</span><br><span class="line">        <span class="variable">.Led</span>(Led[<span class="number">2</span>])</span><br><span class="line">    );</span><br><span class="line">    <span class="keyword">defparam</span> led_flash_fq_inst2<span class="variable">.MCNT</span> = <span class="number">7499999</span>;</span><br><span class="line">    </span><br><span class="line">    led_flash led_flash_fq_inst3(</span><br><span class="line">        <span class="variable">.Clk</span>(Clk),</span><br><span class="line">        <span class="variable">.Reset_n</span>(Reset_n),</span><br><span class="line">        <span class="variable">.Led</span>(Led[<span class="number">3</span>])</span><br><span class="line">    );</span><br><span class="line">    <span class="keyword">defparam</span> led_flash_fq_inst3<span class="variable">.MCNT</span> = <span class="number">9999999</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+
+<p>在四个例化模块中设置了4个不同的MCNT，对应不同频率的LED灯</p>
+<p>LED数组的四位对应四个LED灯</p>
+<h3 id="1-2仿真文件"><a href="#1-2仿真文件" class="headerlink" title="1.2仿真文件"></a>1.2仿真文件</h3><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">`<span class="keyword">timescale</span> 1ns/1ns</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">module</span> led_flash_fq_tb();</span><br><span class="line">    <span class="keyword">reg</span> Clk;</span><br><span class="line">    <span class="keyword">reg</span> Reset_n;</span><br><span class="line">    <span class="keyword">wire</span> [<span class="number">3</span>:<span class="number">0</span>]Led;</span><br><span class="line"></span><br><span class="line">    led_flash_fq_test led_flash_fq_test(</span><br><span class="line">        <span class="variable">.Clk</span>(Clk),</span><br><span class="line">        <span class="variable">.Reset_n</span>(Reset_n),</span><br><span class="line">        <span class="variable">.Led</span>(Led)</span><br><span class="line">    );</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">initial</span> Clk = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">always</span> #<span class="number">10</span> Clk = ~Clk;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">        Reset_n = <span class="number">0</span>;</span><br><span class="line">        #<span class="number">201</span>;</span><br><span class="line">        Reset_n = <span class="number">1</span>;</span><br><span class="line">        #<span class="number">2000000000</span>;</span><br><span class="line">        <span class="built_in">$stop</span>;</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3仿真结果"><a href="#1-3仿真结果" class="headerlink" title="1.3仿真结果"></a>1.3仿真结果</h3><p><img src="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA5.1.png"></p>
+<p>仿真结果的波形图所展现的LED闪烁频率与预期相同</p>
+<h2 id="2-笔记"><a href="#2-笔记" class="headerlink" title="2.笔记"></a>2.笔记</h2><blockquote>
+<p> 在一个模块中多次例化同一个模块时，设置标签便于区分</p>
+</blockquote>
+<blockquote>
+<p> 巧用parameter和defparam语句来实现对一个模块的多次重用</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -192,251 +218,119 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://himmy0830.github.io/2023/07/09/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B05/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/07/08/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B04/" class="archive-article-date">
-  	<time datetime="2023-07-08T15:16:06.576Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-08</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2023/07/08/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B04/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">FPGA笔记4</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/07/08/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B04/">FPGA笔记4</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B7%A7%E7%94%A8%E5%8F%82%E6%95%B0%E5%8C%96%E8%AE%BE%E8%AE%A1%E5%AE%9E%E7%8E%B04%E4%B8%AALED%E7%81%AF%E7%9A%84%E4%B8%8D%E5%90%8C%E9%A2%91%E7%8E%87%E9%97%AA%E7%83%81"><span class="toc-number">1.</span> <span class="toc-text">巧用参数化设计实现4个LED灯的不同频率闪烁</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-LED%E4%B8%8D%E5%90%8C%E9%A2%91%E9%97%AA%E7%83%81"><span class="toc-number">1.1.</span> <span class="toc-text">1.LED不同频闪烁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1%E8%AE%BE%E8%AE%A1%E6%96%87%E4%BB%B6"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1设计文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-1led-flash%E6%A8%A1%E5%9D%97"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">1.1.1led_flash模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-2led-flash-fq-test%E6%96%87%E4%BB%B6"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">1.1.2led_flash_fq_test文件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2%E4%BB%BF%E7%9C%9F%E6%96%87%E4%BB%B6"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2仿真文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3%E4%BB%BF%E7%9C%9F%E7%BB%93%E6%9E%9C"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3仿真结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%AC%94%E8%AE%B0"><span class="toc-number">1.2.</span> <span class="toc-text">2.笔记</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/07/07/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B03/" class="archive-article-date">
-  	<time datetime="2023-07-07T11:29:26.291Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-07</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/07/07/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B03/">FPGA笔记3</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/06/12/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B02/" class="archive-article-date">
-  	<time datetime="2023-06-12T03:37:48.607Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/06/12/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B02/">FPGA笔记2</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/05/31/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B01/" class="archive-article-date">
-  	<time datetime="2023-05-31T06:57:16.158Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-05-31</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/05/31/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B01/">FPGA笔记1</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/05/31/FPGA%E7%AC%94%E8%AE%B0/FPGA%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/" class="archive-article-date">
-  	<time datetime="2023-05-31T00:49:43.310Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-05-31</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/05/31/FPGA%E7%AC%94%E8%AE%B0/FPGA%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/">FPGA开发流程</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/05/27/1/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" class="archive-article-date">
-  	<time datetime="2023-05-27T08:57:05.620Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-05-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/05/27/1/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">记录首次搭博客过程以及markdown常用语法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">essay</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -461,8 +355,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
