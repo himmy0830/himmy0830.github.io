@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA7.4.png">
 <meta property="og:image" content="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA7.5.png">
 <meta property="article:published_time" content="2023-07-15T14:08:41.033Z">
-<meta property="article:modified_time" content="2023-07-15T14:35:31.938Z">
+<meta property="article:modified_time" content="2023-07-16T10:31:54.953Z">
 <meta property="article:author" content="张舒宣">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -75,7 +75,7 @@
 			</ul>
 		</nav>
 		<nav>
-			总文章数 9
+			总文章数 10
 		</nav>		
 		<nav class="header-smart-menu">
     		
@@ -222,6 +222,11 @@
 
 <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)<span class="keyword">begin</span></span><br><span class="line">        uart_tx &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line">        Tx_done &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line">    <span class="keyword">end</span> </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">case</span>(bps_cnt)</span><br><span class="line">        <span class="number">1</span>:<span class="keyword">begin</span> uart_tx &lt;= <span class="number">0</span>; Tx_done &lt;= <span class="number">1&#x27;b0</span>; <span class="keyword">end</span> </span><br><span class="line">        <span class="comment">//从1开始，解决uart_tx在Send_en置1前拉低的问题</span></span><br><span class="line">        <span class="number">2</span>:uart_tx &lt;= Data[<span class="number">0</span>];</span><br><span class="line">        <span class="number">3</span>:uart_tx &lt;= Data[<span class="number">1</span>];</span><br><span class="line">        <span class="number">4</span>:uart_tx &lt;= Data[<span class="number">2</span>];</span><br><span class="line">        <span class="number">5</span>:uart_tx &lt;= Data[<span class="number">3</span>];</span><br><span class="line">        <span class="number">6</span>:uart_tx &lt;= Data[<span class="number">4</span>];</span><br><span class="line">        <span class="number">7</span>:uart_tx &lt;= Data[<span class="number">5</span>];</span><br><span class="line">        <span class="number">8</span>:uart_tx &lt;= Data[<span class="number">6</span>];</span><br><span class="line">        <span class="number">9</span>:uart_tx &lt;= Data[<span class="number">7</span>];</span><br><span class="line">        <span class="number">10</span>:uart_tx &lt;= <span class="number">1</span>;</span><br><span class="line">        <span class="number">11</span>:<span class="keyword">begin</span> uart_tx &lt;= <span class="number">1</span>;Tx_done &lt;= <span class="number">1&#x27;b1</span>;<span class="keyword">end</span> </span><br><span class="line">        <span class="comment">//Tx_done的产生只有一个脉冲，这样设置的好处在仿真文件中能体现</span></span><br><span class="line">        <span class="keyword">default</span>: uart_tx &lt;= <span class="number">1</span>;</span><br><span class="line">   <span class="keyword">endcase</span> </span><br></pre></td></tr></table></figure>
 
+<ul>
+<li><strong>Tx_done的设置方式的不足之处</strong></li>
+</ul>
+<p>**1.**Tx_done虽然为脉冲形式，但脉冲时间超出一个时钟节拍（三个），这在对某些与Tx_done脉冲时长相关的变量影响很大，甚至可能影响整个工程的功能。</p>
+<p>**2.**Tx_done在检测bps_cnt为1时才拉低会导致测试失败。</p>
 
       
 
@@ -304,6 +309,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2023/07/16/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B08/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          FPGA笔记8
+        
+      </div>
+    </a>
   
   
     <a href="/2023/07/13/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B06/" id="article-nav-older" class="article-nav-link-wrap">
