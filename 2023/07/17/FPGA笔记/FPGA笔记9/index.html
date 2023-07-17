@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives | shuxuan&#39;s blog</title>
+  <title>FPGA笔记9 | shuxuan&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="shuxuan&#39;s blog">
-<meta property="og:url" content="http://example.com/archives/index.html">
+  <meta name="description" content="使用串口发送5个字节数据到电脑">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FPGA笔记9">
+<meta property="og:url" content="http://example.com/2023/07/17/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B09/index.html">
 <meta property="og:site_name" content="shuxuan&#39;s blog">
+<meta property="og:description" content="使用串口发送5个字节数据到电脑">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA9.1.png">
+<meta property="article:published_time" content="2023-07-17T02:42:03.721Z">
+<meta property="article:modified_time" content="2023-07-17T05:35:42.171Z">
 <meta property="article:author" content="张舒宣">
+<meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA9.1.png">
   
     <link rel="alternative" href="/atom.xml" title="shuxuan&#39;s blog" type="application/atom+xml">
   
@@ -151,36 +158,49 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-FPGA笔记/FPGA笔记9" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      FPGA笔记9
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2023" class="archive-year">2023</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/07/17/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B09/" class="archive-article-date">
+
+        
+        <a href="/2023/07/17/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B09/" class="archive-article-date">
   	<time datetime="2023-07-17T02:42:03.721Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-17</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/07/17/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B09/">FPGA笔记9</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="使用串口发送5个字节数据到电脑"><a href="#使用串口发送5个字节数据到电脑" class="headerlink" title="使用串口发送5个字节数据到电脑"></a>使用串口发送5个字节数据到电脑</h1><span id="more"></span>
 
-        <div class="article-info info-on-right">
-          
+<h2 id="1-题目概述"><a href="#1-题目概述" class="headerlink" title="1.题目概述"></a>1.题目概述</h2><p>用状态机实现：</p>
+<p>Trans_Go到来时，开始依次发送五个字节，发送结束后，产生Trans_done信号，标志传输完成</p>
+<p>其中嵌套了uart_byte_tx程序，设置6个状态，每个状态发送一个字节数据，状态之间的切换涉及到例化模块的Send_Go、Send_en、和Tx_done信号来连接各个状态。</p>
+<h2 id="2-设计文件"><a href="#2-设计文件" class="headerlink" title="2.设计文件"></a>2.设计文件</h2><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> uart_byte_tx(</span><br><span class="line">    Clk,</span><br><span class="line">    Reset_n,</span><br><span class="line">    Data,</span><br><span class="line">    Send_Go,</span><br><span class="line">    uart_tx,</span><br><span class="line">    Tx_done,</span><br><span class="line">    Baud_set</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">input</span> Clk;</span><br><span class="line">    <span class="keyword">input</span> Reset_n;</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">7</span>:<span class="number">0</span>]Data;</span><br><span class="line">    <span class="keyword">input</span> Send_Go;</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">2</span>:<span class="number">0</span>]Baud_set;</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> uart_tx;</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> Tx_done;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">17</span>:<span class="number">0</span>] bps_DR;</span><br><span class="line">    <span class="keyword">always</span>@(*)</span><br><span class="line">        <span class="keyword">case</span>(Baud_set)</span><br><span class="line">            <span class="number">0</span>:bps_DR = <span class="number">1000000000</span>/<span class="number">9600</span>/<span class="number">20</span>;</span><br><span class="line">            <span class="number">1</span>:bps_DR = <span class="number">1000000000</span>/<span class="number">19200</span>/<span class="number">20</span>;</span><br><span class="line">            <span class="number">2</span>:bps_DR = <span class="number">1000000000</span>/<span class="number">38400</span>/<span class="number">20</span>;</span><br><span class="line">            <span class="number">3</span>:bps_DR = <span class="number">1000000000</span>/<span class="number">57600</span>/<span class="number">20</span>;</span><br><span class="line">            <span class="number">4</span>:bps_DR = <span class="number">1000000000</span>/<span class="number">115200</span>/<span class="number">20</span>;</span><br><span class="line">            <span class="keyword">default</span>:bps_DR = <span class="number">1000000000</span>/<span class="number">9600</span>/<span class="number">20</span>;</span><br><span class="line">        <span class="keyword">endcase</span>     </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">wire</span> bps_clk;</span><br><span class="line">    <span class="keyword">assign</span> bps_clk = (div_cnt == bps_DR - <span class="number">1</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">17</span>:<span class="number">0</span>] div_cnt;</span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        div_cnt &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(Send_en)<span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span>(bps_clk)</span><br><span class="line">            div_cnt &lt;= <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            div_cnt &lt;= div_cnt + <span class="number">1&#x27;b1</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">       div_cnt &lt;= <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">3</span>:<span class="number">0</span>]bps_cnt;</span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        bps_cnt &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(Send_en)<span class="keyword">begin</span> </span><br><span class="line">        <span class="keyword">if</span>(div_cnt == <span class="number">1</span>)<span class="keyword">begin</span> <span class="comment">//有改动</span></span><br><span class="line">            <span class="keyword">if</span>(bps_cnt == <span class="number">11</span>)</span><br><span class="line">                bps_cnt &lt;= <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                bps_cnt &lt;= bps_cnt + <span class="number">1&#x27;b1</span>;</span><br><span class="line">        <span class="keyword">end</span>     </span><br><span class="line">    <span class="keyword">end</span> </span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        bps_cnt &lt;= <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">reg</span> Send_en;</span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        Send_en &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(Send_Go)</span><br><span class="line">        Send_en &lt;= <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(Tx_done)</span><br><span class="line">        Send_en &lt;= <span class="number">0</span>;   </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        uart_tx &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">case</span>(bps_cnt)</span><br><span class="line">        <span class="number">1</span>:uart_tx &lt;= <span class="number">0</span>;</span><br><span class="line">        <span class="number">2</span>:uart_tx &lt;= r_Data[<span class="number">0</span>];</span><br><span class="line">        <span class="number">3</span>:uart_tx &lt;= r_Data[<span class="number">1</span>];</span><br><span class="line">        <span class="number">4</span>:uart_tx &lt;= r_Data[<span class="number">2</span>];</span><br><span class="line">        <span class="number">5</span>:uart_tx &lt;= r_Data[<span class="number">3</span>];</span><br><span class="line">        <span class="number">6</span>:uart_tx &lt;= r_Data[<span class="number">4</span>];</span><br><span class="line">        <span class="number">7</span>:uart_tx &lt;= r_Data[<span class="number">5</span>];</span><br><span class="line">        <span class="number">8</span>:uart_tx &lt;= r_Data[<span class="number">6</span>];</span><br><span class="line">        <span class="number">9</span>:uart_tx &lt;= r_Data[<span class="number">7</span>];</span><br><span class="line">        <span class="number">10</span>:uart_tx &lt;= <span class="number">1</span>;</span><br><span class="line">        <span class="number">11</span>:uart_tx &lt;= <span class="number">1</span>; </span><br><span class="line">        <span class="comment">//Tx_done的产生只有一个脉冲，这样设置的好处在仿真文件中能体现</span></span><br><span class="line">        <span class="keyword">default</span>: uart_tx &lt;= <span class="number">1</span>;</span><br><span class="line">   <span class="keyword">endcase</span> </span><br><span class="line">   </span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        Tx_done &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>((bps_clk == <span class="number">1</span>) &amp;&amp; (bps_cnt == <span class="number">10</span>))</span><br><span class="line">        Tx_done &lt;= <span class="number">1</span>;    </span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        Tx_done &lt;= <span class="number">0</span>;    </span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">7</span>:<span class="number">0</span>] r_Data;</span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk)</span><br><span class="line">    <span class="keyword">if</span>(Send_Go)</span><br><span class="line">        r_Data &lt;= Data;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        r_Data &lt;= r_Data;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//if else 实现状态机</span></span><br><span class="line"><span class="keyword">module</span> uart_tx_data(</span><br><span class="line">    Clk,</span><br><span class="line">    Reset_n,</span><br><span class="line">    Data40,</span><br><span class="line">    Trans_Go,</span><br><span class="line">    uart_tx,</span><br><span class="line">    Trans_done</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">input</span> Clk;</span><br><span class="line">    <span class="keyword">input</span> Reset_n;</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">39</span>:<span class="number">0</span>]Data40;</span><br><span class="line">    <span class="keyword">input</span> Trans_Go;</span><br><span class="line">    <span class="keyword">output</span> uart_tx;</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> Trans_done;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span> Send_Go;</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">7</span>:<span class="number">0</span>]Data;</span><br><span class="line">    <span class="keyword">wire</span> Tx_done;</span><br><span class="line"></span><br><span class="line">    uart_byte_tx uart_byte_tx(</span><br><span class="line">        <span class="variable">.Clk</span>(Clk),</span><br><span class="line">        <span class="variable">.Reset_n</span>(Reset_n),</span><br><span class="line">        <span class="variable">.Data</span>(Data),</span><br><span class="line">        <span class="variable">.Send_Go</span>(Send_Go),</span><br><span class="line">        <span class="variable">.uart_tx</span>(uart_tx),</span><br><span class="line">        <span class="variable">.Tx_done</span>(Tx_done),</span><br><span class="line">        <span class="variable">.Baud_set</span>(<span class="number">3&#x27;d4</span>)</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">3</span>:<span class="number">0</span>]state;</span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)<span class="keyword">begin</span></span><br><span class="line">        state &lt;= <span class="number">0</span>;</span><br><span class="line">        Data &lt;= <span class="number">0</span>;</span><br><span class="line">        Send_Go &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(state == <span class="number">0</span>)<span class="keyword">begin</span></span><br><span class="line">    Trans_done &lt;= <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(Trans_Go)<span class="keyword">begin</span></span><br><span class="line">            Data &lt;= Data40[<span class="number">7</span>:<span class="number">0</span>];</span><br><span class="line">            Send_Go &lt;= <span class="number">1</span>;</span><br><span class="line">            state &lt;= <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            Data &lt;= Data;</span><br><span class="line">            Send_Go &lt;= <span class="number">0</span>;</span><br><span class="line">            state &lt;= <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(state == <span class="number">1</span>)<span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span>(Tx_done)<span class="keyword">begin</span></span><br><span class="line">            Data &lt;= Data40[<span class="number">15</span>:<span class="number">8</span>];</span><br><span class="line">            Send_Go &lt;= <span class="number">1</span>;</span><br><span class="line">            state &lt;= <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            Data &lt;= Data;</span><br><span class="line">            Send_Go &lt;= <span class="number">0</span>;</span><br><span class="line">            state &lt;= <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span> </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(state == <span class="number">2</span>)<span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span>(Tx_done)<span class="keyword">begin</span></span><br><span class="line">            Data &lt;= Data40[<span class="number">23</span>:<span class="number">16</span>];</span><br><span class="line">            Send_Go &lt;= <span class="number">1</span>;</span><br><span class="line">            state &lt;= <span class="number">3</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            Data &lt;= Data;</span><br><span class="line">            Send_Go &lt;= <span class="number">0</span>;</span><br><span class="line">            state &lt;= <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span> </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(state == <span class="number">3</span>)<span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span>(Tx_done)<span class="keyword">begin</span></span><br><span class="line">            Data &lt;= Data40[<span class="number">31</span>:<span class="number">24</span>];</span><br><span class="line">            Send_Go &lt;= <span class="number">1</span>;</span><br><span class="line">            state &lt;= <span class="number">4</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            Data &lt;= Data;</span><br><span class="line">            Send_Go &lt;= <span class="number">0</span>;</span><br><span class="line">            state &lt;= <span class="number">3</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span> </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(state == <span class="number">4</span>)<span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span>(Tx_done)<span class="keyword">begin</span></span><br><span class="line">            Data &lt;= Data40[<span class="number">39</span>:<span class="number">32</span>];</span><br><span class="line">            Send_Go &lt;= <span class="number">1</span>;</span><br><span class="line">            state &lt;= <span class="number">5</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            Data &lt;= Data;</span><br><span class="line">            Send_Go &lt;= <span class="number">0</span>;</span><br><span class="line">            state &lt;= <span class="number">4</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span> </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(state == <span class="number">5</span>)<span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span>(Tx_done)<span class="keyword">begin</span></span><br><span class="line">            Send_Go &lt;= <span class="number">0</span>;</span><br><span class="line">            Trans_done &lt;= <span class="number">1</span>;</span><br><span class="line">            state &lt;= <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            Data &lt;= Data;</span><br><span class="line">            Send_Go &lt;= <span class="number">0</span>;</span><br><span class="line">            state &lt;= <span class="number">5</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span> </span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//case实现状态机</span></span><br><span class="line"><span class="keyword">module</span> uart_tx_data2(</span><br><span class="line">    Clk,</span><br><span class="line">    Reset_n,</span><br><span class="line">    Data40,</span><br><span class="line">    Trans_Go,</span><br><span class="line">    uart_tx,</span><br><span class="line">    Trans_done</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">input</span> Clk;</span><br><span class="line">    <span class="keyword">input</span> Reset_n;</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">39</span>:<span class="number">0</span>]Data40;</span><br><span class="line">    <span class="keyword">input</span> Trans_Go;</span><br><span class="line">    <span class="keyword">output</span> uart_tx;</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> Trans_done;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span> Send_Go;</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">7</span>:<span class="number">0</span>]Data;</span><br><span class="line">    <span class="keyword">wire</span> Tx_done;</span><br><span class="line"></span><br><span class="line">    uart_byte_tx uart_byte_tx(</span><br><span class="line">        <span class="variable">.Clk</span>(Clk),</span><br><span class="line">        <span class="variable">.Reset_n</span>(Reset_n),</span><br><span class="line">        <span class="variable">.Data</span>(Data),</span><br><span class="line">        <span class="variable">.Send_Go</span>(Send_Go),</span><br><span class="line">        <span class="variable">.uart_tx</span>(uart_tx),</span><br><span class="line">        <span class="variable">.Tx_done</span>(Tx_done),</span><br><span class="line">        <span class="variable">.Baud_set</span>(<span class="number">3&#x27;d4</span>)</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">3</span>:<span class="number">0</span>]state;</span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)<span class="keyword">begin</span></span><br><span class="line">        state &lt;= <span class="number">0</span>;</span><br><span class="line">        Data &lt;= <span class="number">0</span>;</span><br><span class="line">        Send_Go &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">case</span>(state)</span><br><span class="line">        <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">begin</span></span><br><span class="line">            Trans_done &lt;= <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span>(Trans_Go)<span class="keyword">begin</span></span><br><span class="line">                Data &lt;= Data40[<span class="number">7</span>:<span class="number">0</span>];</span><br><span class="line">                Send_Go &lt;= <span class="number">1</span>;</span><br><span class="line">                state &lt;= <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">                Data &lt;= Data;</span><br><span class="line">                Send_Go &lt;= <span class="number">0</span>;</span><br><span class="line">                state &lt;= <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">begin</span></span><br><span class="line">            <span class="keyword">if</span>(Tx_done)<span class="keyword">begin</span></span><br><span class="line">                Data &lt;= Data40[<span class="number">15</span>:<span class="number">8</span>];</span><br><span class="line">                Send_Go &lt;= <span class="number">1</span>;</span><br><span class="line">                state &lt;= <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">                Data &lt;= Data;</span><br><span class="line">                Send_Go &lt;= <span class="number">0</span>;</span><br><span class="line">                state &lt;= <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span> </span><br><span class="line">        <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">begin</span></span><br><span class="line">            <span class="keyword">if</span>(Tx_done)<span class="keyword">begin</span></span><br><span class="line">                Data &lt;= Data40[<span class="number">23</span>:<span class="number">16</span>];</span><br><span class="line">                Send_Go &lt;= <span class="number">1</span>;</span><br><span class="line">                state &lt;= <span class="number">3</span>;</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">                Data &lt;= Data;</span><br><span class="line">                Send_Go &lt;= <span class="number">0</span>;</span><br><span class="line">                state &lt;= <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span> </span><br><span class="line">        <span class="number">3</span>:</span><br><span class="line">        <span class="keyword">begin</span></span><br><span class="line">                <span class="keyword">if</span>(Tx_done)<span class="keyword">begin</span></span><br><span class="line">                    Data &lt;= Data40[<span class="number">31</span>:<span class="number">24</span>];</span><br><span class="line">                    Send_Go &lt;= <span class="number">1</span>;</span><br><span class="line">                    state &lt;= <span class="number">4</span>;</span><br><span class="line">                <span class="keyword">end</span></span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">                    Data &lt;= Data;</span><br><span class="line">                    Send_Go &lt;= <span class="number">0</span>;</span><br><span class="line">                    state &lt;= <span class="number">3</span>;</span><br><span class="line">                <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">end</span> </span><br><span class="line">        <span class="number">4</span>:</span><br><span class="line">        <span class="keyword">begin</span></span><br><span class="line">                <span class="keyword">if</span>(Tx_done)<span class="keyword">begin</span></span><br><span class="line">                    Data &lt;= Data40[<span class="number">39</span>:<span class="number">32</span>];</span><br><span class="line">                    Send_Go &lt;= <span class="number">1</span>;</span><br><span class="line">                    state &lt;= <span class="number">5</span>;</span><br><span class="line">                <span class="keyword">end</span></span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">                    Data &lt;= Data;</span><br><span class="line">                    Send_Go &lt;= <span class="number">0</span>;</span><br><span class="line">                    state &lt;= <span class="number">4</span>;</span><br><span class="line">                <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">end</span> </span><br><span class="line">        <span class="number">5</span>:</span><br><span class="line">        <span class="keyword">begin</span></span><br><span class="line">                <span class="keyword">if</span>(Tx_done)<span class="keyword">begin</span></span><br><span class="line">                    Send_Go &lt;= <span class="number">0</span>;</span><br><span class="line">                    Trans_done &lt;= <span class="number">1</span>;</span><br><span class="line">                    state &lt;= <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">end</span></span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">                    Data &lt;= Data;</span><br><span class="line">                    Send_Go &lt;= <span class="number">0</span>;</span><br><span class="line">                    state &lt;= <span class="number">5</span>;</span><br><span class="line">                <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">begin</span></span><br><span class="line">                    Data &lt;= Data;</span><br><span class="line">                    Send_Go &lt;= <span class="number">0</span>;</span><br><span class="line">                    state &lt;= <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">end</span> </span><br><span class="line">    <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-仿真程序"><a href="#3-仿真程序" class="headerlink" title="3.仿真程序"></a>3.仿真程序</h2><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">`<span class="keyword">timescale</span> 1ns/1ns</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">module</span> uart_tx_data_tb();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">reg</span> Clk;</span><br><span class="line">    <span class="keyword">reg</span> Reset_n;</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">39</span>:<span class="number">0</span>]Data40;</span><br><span class="line">    <span class="keyword">reg</span> Trans_Go;</span><br><span class="line">    <span class="keyword">wire</span> uart_tx;</span><br><span class="line">    </span><br><span class="line">    uart_tx_data2 uart_tx_data(</span><br><span class="line">        Clk,</span><br><span class="line">        Reset_n,</span><br><span class="line">        Data40,</span><br><span class="line">        Trans_Go,</span><br><span class="line">        uart_tx,</span><br><span class="line">        Trans_done</span><br><span class="line">    );</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">initial</span> Clk = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">always</span> #<span class="number">10</span> Clk = ~Clk;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">        Reset_n = <span class="number">0</span>;</span><br><span class="line">        Data40 = <span class="number">0</span>;</span><br><span class="line">        Trans_Go = <span class="number">0</span>;</span><br><span class="line">        #<span class="number">201</span>;</span><br><span class="line">        Reset_n = <span class="number">1</span>;</span><br><span class="line">        #<span class="number">200</span>;</span><br><span class="line">        </span><br><span class="line">        Data40 = <span class="number">40&#x27;h123456789a</span>;</span><br><span class="line">        Trans_Go = <span class="number">1</span>;</span><br><span class="line">        #<span class="number">20</span>;</span><br><span class="line">        Trans_Go = <span class="number">0</span>;</span><br><span class="line">        @(<span class="keyword">posedge</span> Trans_done)</span><br><span class="line">        #<span class="number">200000</span>;</span><br><span class="line">        </span><br><span class="line">        Data40 = <span class="number">40&#x27;ha987654321</span>;</span><br><span class="line">        Trans_Go = <span class="number">1</span>;</span><br><span class="line">        #<span class="number">20</span>;</span><br><span class="line">        Trans_Go = <span class="number">0</span>;</span><br><span class="line">        @(<span class="keyword">posedge</span> Trans_done)</span><br><span class="line">        #<span class="number">200000</span>;</span><br><span class="line">        <span class="built_in">$stop</span>;</span><br><span class="line">    <span class="keyword">end</span> </span><br><span class="line">        </span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-仿真结果"><a href="#4-仿真结果" class="headerlink" title="4.仿真结果"></a>4.仿真结果</h2><p><img src="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA9.1.png"></p>
+<h2 id="5-思考题：仅用三个状态的状态机实现本题目"><a href="#5-思考题：仅用三个状态的状态机实现本题目" class="headerlink" title="5.思考题：仅用三个状态的状态机实现本题目"></a>5.思考题：仅用三个状态的状态机实现本题目</h2><p>思路：将三个状态设置为发送前、发送中和发送完成，在发送中状态设置数据寄存器实现每次传输数据的数据更新工作，在设置一个计数器，来记录发送多少个字节，并作为发送结束的信号和字节更新的信号，这样还可以实现动态设置每次发送多少个字节，仅通过改变计数器的阈值就可以。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -192,364 +212,118 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://himmy0830.github.io/2023/07/17/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B09/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/07/16/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B08/" class="archive-article-date">
-  	<time datetime="2023-07-16T13:34:35.828Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-16</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2023/07/16/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B08/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">FPGA笔记8</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/07/16/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B08/">FPGA笔记8</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%B8%B2%E5%8F%A3%E5%8F%91%E9%80%815%E4%B8%AA%E5%AD%97%E8%8A%82%E6%95%B0%E6%8D%AE%E5%88%B0%E7%94%B5%E8%84%91"><span class="toc-number">1.</span> <span class="toc-text">使用串口发送5个字节数据到电脑</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E9%A2%98%E7%9B%AE%E6%A6%82%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">1.题目概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%AE%BE%E8%AE%A1%E6%96%87%E4%BB%B6"><span class="toc-number">1.2.</span> <span class="toc-text">2.设计文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BB%BF%E7%9C%9F%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.3.</span> <span class="toc-text">3.仿真程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%BB%BF%E7%9C%9F%E7%BB%93%E6%9E%9C"><span class="toc-number">1.4.</span> <span class="toc-text">4.仿真结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%80%9D%E8%80%83%E9%A2%98%EF%BC%9A%E4%BB%85%E7%94%A8%E4%B8%89%E4%B8%AA%E7%8A%B6%E6%80%81%E7%9A%84%E7%8A%B6%E6%80%81%E6%9C%BA%E5%AE%9E%E7%8E%B0%E6%9C%AC%E9%A2%98%E7%9B%AE"><span class="toc-number">1.5.</span> <span class="toc-text">5.思考题：仅用三个状态的状态机实现本题目</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/07/15/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B07/" class="archive-article-date">
-  	<time datetime="2023-07-15T14:08:41.033Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-15</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/07/15/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B07/">FPGA笔记7</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/07/13/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B06/" class="archive-article-date">
-  	<time datetime="2023-07-13T12:22:55.462Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/07/13/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B06/">FPGA笔记6</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/07/09/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B05/" class="archive-article-date">
-  	<time datetime="2023-07-09T08:24:43.145Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/07/09/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B05/">FPGA笔记5</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/07/08/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B04/" class="archive-article-date">
-  	<time datetime="2023-07-08T15:16:06.576Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/07/08/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B04/">FPGA笔记4</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/07/07/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B03/" class="archive-article-date">
-  	<time datetime="2023-07-07T11:29:26.291Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/07/07/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B03/">FPGA笔记3</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/06/12/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B02/" class="archive-article-date">
-  	<time datetime="2023-06-12T03:37:48.607Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/06/12/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B02/">FPGA笔记2</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/05/31/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B01/" class="archive-article-date">
-  	<time datetime="2023-05-31T06:57:16.158Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-05-31</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/05/31/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B01/">FPGA笔记1</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/05/31/FPGA%E7%AC%94%E8%AE%B0/FPGA%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/" class="archive-article-date">
-  	<time datetime="2023-05-31T00:49:43.310Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-05-31</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/05/31/FPGA%E7%AC%94%E8%AE%B0/FPGA%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/">FPGA开发流程</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &amp;raquo;</a>
-    </nav>
   
 
 
@@ -575,8 +349,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
