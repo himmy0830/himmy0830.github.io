@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2023/7 | shuxuan&#39;s blog</title>
+  <title>FPGA笔记16 | shuxuan&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="shuxuan&#39;s blog">
-<meta property="og:url" content="http://example.com/archives/2023/07/index.html">
+  <meta name="description" content="时钟管理单元（PLL锁相环）介绍与应用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FPGA笔记16">
+<meta property="og:url" content="http://example.com/2023/07/22/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B016/index.html">
 <meta property="og:site_name" content="shuxuan&#39;s blog">
+<meta property="og:description" content="时钟管理单元（PLL锁相环）介绍与应用">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA16.1.png">
+<meta property="article:published_time" content="2023-07-22T10:45:00.295Z">
+<meta property="article:modified_time" content="2023-07-22T11:30:47.631Z">
 <meta property="article:author" content="张舒宣">
+<meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA16.1.png">
   
     <link rel="alternative" href="/atom.xml" title="shuxuan&#39;s blog" type="application/atom+xml">
   
@@ -151,36 +158,43 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-FPGA笔记/FPGA笔记16" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      FPGA笔记16
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2023" class="archive-year">2023</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/07/22/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B016/" class="archive-article-date">
+
+        
+        <a href="/2023/07/22/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B016/" class="archive-article-date">
   	<time datetime="2023-07-22T10:45:00.295Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-22</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/07/22/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B016/">FPGA笔记16</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="时钟管理单元（PLL锁相环）介绍与应用"><a href="#时钟管理单元（PLL锁相环）介绍与应用" class="headerlink" title="时钟管理单元（PLL锁相环）介绍与应用"></a>时钟管理单元（PLL锁相环）介绍与应用</h1><span id="more"></span>
 
-        <div class="article-info info-on-right">
-          
+<h2 id="1-时钟管理器"><a href="#1-时钟管理器" class="headerlink" title="1.时钟管理器"></a>1.时钟管理器</h2><p>功能：通过GUI的界面形式，帮助用户来创建自己的时钟网络，能够基于一个时钟源（晶振），进行分频，倍频，得到其他频率、相位、占空比的时钟信号。这个时钟管理器根据用户的设置参数，去配置FPGA内部的时钟管理硬件资源</p>
+<p>PLL时钟质量很高</p>
+<p>Locked：标志着时钟管理单元完成了对用户设置的需求的时钟信号的产生，此时的输出时钟信号就是满足要求且稳定的</p>
+<p><img src="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA16.1.png"></p>
+<h2 id="2-基于笔记15结合PLL改进设计的时钟"><a href="#2-基于笔记15结合PLL改进设计的时钟" class="headerlink" title="2.基于笔记15结合PLL改进设计的时钟"></a>2.基于笔记15结合PLL改进设计的时钟</h2><h3 id="2-1设计文件"><a href="#2-1设计文件" class="headerlink" title="2.1设计文件"></a>2.1设计文件</h3><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> DDS_AD9767(</span><br><span class="line">    Clk,</span><br><span class="line">    Reset_n,</span><br><span class="line">    Mode_selA,</span><br><span class="line">    Mode_selB,</span><br><span class="line">    DataA,</span><br><span class="line">    DataB,</span><br><span class="line">    ClkA,</span><br><span class="line">    WRTA,</span><br><span class="line">    ClkB,</span><br><span class="line">    WRTB,</span><br><span class="line">    Key</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">input</span> Clk;</span><br><span class="line">    <span class="keyword">input</span> Reset_n;</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">1</span>:<span class="number">0</span>]Mode_selA;</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">1</span>:<span class="number">0</span>]Mode_selB;</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">3</span>:<span class="number">0</span>]Key;</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">13</span>:<span class="number">0</span>]DataA;</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">13</span>:<span class="number">0</span>]DataB;</span><br><span class="line">    <span class="keyword">output</span> ClkA;</span><br><span class="line">    <span class="keyword">output</span> WRTA;</span><br><span class="line">    <span class="keyword">output</span> ClkB;</span><br><span class="line">    <span class="keyword">output</span> WRTB;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">assign</span> ClkA = CLK125M;</span><br><span class="line">    <span class="keyword">assign</span> ClkB = CLK125M;</span><br><span class="line">    <span class="keyword">assign</span> WRTA = ClkA;</span><br><span class="line">    <span class="keyword">assign</span> WRTB = ClkB;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//通道AB的频率和相位控制字</span></span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">31</span>:<span class="number">0</span>]FwordA,FwordB;</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">11</span>:<span class="number">0</span>]PwordA,PwordB;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">wire</span> CLK125M;</span><br><span class="line">    MMCM MMCM(</span><br><span class="line">        <span class="variable">.clk_out1</span>(CLK125M),     </span><br><span class="line">        <span class="variable">.resetn</span>(Reset_n), </span><br><span class="line">        <span class="variable">.locked</span>(), </span><br><span class="line">        <span class="variable">.clk_in1</span>(Clk)</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">//四个按键的按键消抖</span></span><br><span class="line">    <span class="keyword">wire</span> [<span class="number">3</span>:<span class="number">0</span>]Key_flag;</span><br><span class="line">    <span class="keyword">wire</span> [<span class="number">3</span>:<span class="number">0</span>]Key_state;</span><br><span class="line">    key_filter key_filter0(</span><br><span class="line">        <span class="variable">.Key</span>(Key[<span class="number">0</span>]),</span><br><span class="line">        <span class="variable">.Reset_n</span>(Reset_n),</span><br><span class="line">        <span class="variable">.Clk</span>(CLK125M),</span><br><span class="line">        <span class="variable">.Key_flag</span>(Key_flag[<span class="number">0</span>]),</span><br><span class="line">        <span class="variable">.Key_state</span>(Key_state[<span class="number">0</span>])</span><br><span class="line">    );</span><br><span class="line">    </span><br><span class="line">    key_filter key_filter1(</span><br><span class="line">        <span class="variable">.Key</span>(Key[<span class="number">1</span>]),</span><br><span class="line">        <span class="variable">.Reset_n</span>(Reset_n),</span><br><span class="line">        <span class="variable">.Clk</span>(CLK125M),</span><br><span class="line">        <span class="variable">.Key_flag</span>(Key_flag[<span class="number">1</span>]),</span><br><span class="line">        <span class="variable">.Key_state</span>(Key_state[<span class="number">1</span>])</span><br><span class="line">    );</span><br><span class="line">    </span><br><span class="line">    key_filter key_filter2(</span><br><span class="line">        <span class="variable">.Key</span>(Key[<span class="number">2</span>]),</span><br><span class="line">        <span class="variable">.Reset_n</span>(Reset_n),</span><br><span class="line">        <span class="variable">.Clk</span>(CLK125M),</span><br><span class="line">        <span class="variable">.Key_flag</span>(Key_flag[<span class="number">2</span>]),</span><br><span class="line">        <span class="variable">.Key_state</span>(Key_state[<span class="number">2</span>])</span><br><span class="line">    );</span><br><span class="line">    </span><br><span class="line">    key_filter key_filter3(</span><br><span class="line">        <span class="variable">.Key</span>(Key[<span class="number">3</span>]),</span><br><span class="line">        <span class="variable">.Reset_n</span>(Reset_n),</span><br><span class="line">        <span class="variable">.Clk</span>(CLK125M),</span><br><span class="line">        <span class="variable">.Key_flag</span>(Key_flag[<span class="number">3</span>]),</span><br><span class="line">        <span class="variable">.Key_state</span>(Key_state[<span class="number">3</span>])</span><br><span class="line">    );</span><br><span class="line">       </span><br><span class="line">    DDS_Module DDS_ModuleA(</span><br><span class="line">        <span class="variable">.Clk</span>(CLK125M),</span><br><span class="line">        <span class="variable">.Reset_n</span>(Reset_n),</span><br><span class="line">        <span class="variable">.Mode_sel</span>(Mode_selA),</span><br><span class="line">        <span class="variable">.Fword</span>(FwordA),</span><br><span class="line">        <span class="variable">.Pword</span>(PwordA),</span><br><span class="line">        <span class="variable">.Data</span>(DataA)</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    DDS_Module DDS_ModuleB(</span><br><span class="line">        <span class="variable">.Clk</span>(CLK125M),</span><br><span class="line">        <span class="variable">.Reset_n</span>(Reset_n),</span><br><span class="line">        <span class="variable">.Mode_sel</span>(Mode_selB),</span><br><span class="line">        <span class="variable">.Fword</span>(FwordB),</span><br><span class="line">        <span class="variable">.Pword</span>(PwordB),</span><br><span class="line">        <span class="variable">.Data</span>(DataB)</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">2</span>:<span class="number">0</span>]CHA_Fword_Sel;</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">2</span>:<span class="number">0</span>]CHB_Fword_Sel;</span><br><span class="line">    <span class="comment">//选择控制通道AB的频率控制字</span></span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">2</span>:<span class="number">0</span>]CHA_Pword_Sel;</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">2</span>:<span class="number">0</span>]CHB_Pword_Sel;</span><br><span class="line">    <span class="comment">//选择控制通道AB的相位控制字</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        CHA_Fword_Sel &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(Key_flag[<span class="number">0</span>] &amp;&amp; (Key_state[<span class="number">0</span>] == <span class="number">0</span>))<span class="comment">//Key_flag[0] &amp;&amp; (Key_state[0] == 0)表示按下操作</span></span><br><span class="line">        CHA_Fword_Sel &lt;= CHA_Fword_Sel + <span class="number">1&#x27;b1</span>;</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        CHB_Fword_Sel &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(Key_flag[<span class="number">1</span>] &amp;&amp; (Key_state[<span class="number">1</span>] == <span class="number">0</span>))</span><br><span class="line">        CHB_Fword_Sel &lt;= CHB_Fword_Sel + <span class="number">1&#x27;b1</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        CHA_Pword_Sel &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(Key_flag[<span class="number">2</span>] &amp;&amp; (Key_state[<span class="number">2</span>] == <span class="number">0</span>))</span><br><span class="line">        CHA_Pword_Sel &lt;= CHA_Pword_Sel + <span class="number">1&#x27;b1</span>;</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        CHB_Pword_Sel &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(Key_flag[<span class="number">3</span>] &amp;&amp; (Key_state[<span class="number">3</span>] == <span class="number">0</span>))</span><br><span class="line">        CHB_Pword_Sel &lt;= CHB_Pword_Sel + <span class="number">1&#x27;b1</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">always</span>@(*)</span><br><span class="line">        <span class="keyword">case</span>(CHA_Fword_Sel)</span><br><span class="line">            <span class="number">0</span>:FwordA = <span class="number">2</span>**<span class="number">32</span> / <span class="number">50000000</span>;</span><br><span class="line">            <span class="number">1</span>:FwordA = <span class="number">2</span>**<span class="number">32</span> / <span class="number">5000000</span>;</span><br><span class="line">            <span class="number">2</span>:FwordA = <span class="number">2</span>**<span class="number">32</span> / <span class="number">500000</span>;</span><br><span class="line">            <span class="number">3</span>:FwordA = <span class="number">2</span>**<span class="number">32</span> / <span class="number">50000</span>;</span><br><span class="line">            <span class="number">4</span>:FwordA = <span class="number">2</span>**<span class="number">32</span> / <span class="number">5000</span>;</span><br><span class="line">            <span class="number">5</span>:FwordA = <span class="number">2</span>**<span class="number">32</span> / <span class="number">500</span>;</span><br><span class="line">            <span class="number">6</span>:FwordA = <span class="number">2</span>**<span class="number">32</span> / <span class="number">50</span>;</span><br><span class="line">            <span class="number">7</span>:FwordA = <span class="number">2</span>**<span class="number">32</span> / <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">   </span><br><span class="line">    <span class="keyword">always</span>@(*)</span><br><span class="line">        <span class="keyword">case</span>(CHB_Fword_Sel)</span><br><span class="line">            <span class="number">0</span>:FwordB = <span class="number">2</span>**<span class="number">32</span> / <span class="number">50000000</span>;</span><br><span class="line">            <span class="number">1</span>:FwordB = <span class="number">2</span>**<span class="number">32</span> / <span class="number">5000000</span>;</span><br><span class="line">            <span class="number">2</span>:FwordB = <span class="number">2</span>**<span class="number">32</span> / <span class="number">500000</span>;</span><br><span class="line">            <span class="number">3</span>:FwordB = <span class="number">2</span>**<span class="number">32</span> / <span class="number">50000</span>;</span><br><span class="line">            <span class="number">4</span>:FwordB = <span class="number">2</span>**<span class="number">32</span> / <span class="number">5000</span>;</span><br><span class="line">            <span class="number">5</span>:FwordB = <span class="number">2</span>**<span class="number">32</span> / <span class="number">500</span>;</span><br><span class="line">            <span class="number">6</span>:FwordB = <span class="number">2</span>**<span class="number">32</span> / <span class="number">50</span>;</span><br><span class="line">            <span class="number">7</span>:FwordB = <span class="number">2</span>**<span class="number">32</span> / <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">always</span>@(*)</span><br><span class="line">        <span class="keyword">case</span>(CHA_Pword_Sel)</span><br><span class="line">            <span class="number">0</span>:PwordA = <span class="number">0</span>;    <span class="comment">//0</span></span><br><span class="line">            <span class="number">1</span>:PwordA = <span class="number">341</span>;  <span class="comment">//30</span></span><br><span class="line">            <span class="number">2</span>:PwordA = <span class="number">683</span>;  <span class="comment">//60</span></span><br><span class="line">            <span class="number">3</span>:PwordA = <span class="number">1024</span>; <span class="comment">//90</span></span><br><span class="line">            <span class="number">4</span>:PwordA = <span class="number">1707</span>; <span class="comment">//150 </span></span><br><span class="line">            <span class="number">5</span>:PwordA = <span class="number">2048</span>; <span class="comment">//180</span></span><br><span class="line">            <span class="number">6</span>:PwordA = <span class="number">3072</span>; <span class="comment">//270 </span></span><br><span class="line">            <span class="number">7</span>:PwordA = <span class="number">3641</span>; <span class="comment">//320</span></span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">always</span>@(*)</span><br><span class="line">        <span class="keyword">case</span>(CHB_Pword_Sel)</span><br><span class="line">            <span class="number">0</span>:PwordB = <span class="number">0</span>;    <span class="comment">//0</span></span><br><span class="line">            <span class="number">1</span>:PwordB = <span class="number">341</span>;  <span class="comment">//30</span></span><br><span class="line">            <span class="number">2</span>:PwordB = <span class="number">683</span>;  <span class="comment">//60</span></span><br><span class="line">            <span class="number">3</span>:PwordB = <span class="number">1024</span>; <span class="comment">//90</span></span><br><span class="line">            <span class="number">4</span>:PwordB = <span class="number">1707</span>; <span class="comment">//150 </span></span><br><span class="line">            <span class="number">5</span>:PwordB = <span class="number">2048</span>; <span class="comment">//180</span></span><br><span class="line">            <span class="number">6</span>:PwordB = <span class="number">3072</span>; <span class="comment">//270 </span></span><br><span class="line">            <span class="number">7</span>:PwordB = <span class="number">3641</span>; <span class="comment">//320</span></span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2MMCM设置"><a href="#2-2MMCM设置" class="headerlink" title="2.2MMCM设置"></a>2.2MMCM设置</h3><p>输入时钟50MHz，输出时钟125MHz</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -192,364 +206,118 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://himmy0830.github.io/2023/07/22/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B016/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/07/22/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B015/" class="archive-article-date">
-  	<time datetime="2023-07-22T05:36:03.334Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-22</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2023/07/22/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B015/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">FPGA笔记15</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/07/22/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B015/">FPGA笔记15</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%97%B6%E9%92%9F%E7%AE%A1%E7%90%86%E5%8D%95%E5%85%83%EF%BC%88PLL%E9%94%81%E7%9B%B8%E7%8E%AF%EF%BC%89%E4%BB%8B%E7%BB%8D%E4%B8%8E%E5%BA%94%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">时钟管理单元（PLL锁相环）介绍与应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%97%B6%E9%92%9F%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-number">1.1.</span> <span class="toc-text">1.时钟管理器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%9F%BA%E4%BA%8E%E7%AC%94%E8%AE%B015%E7%BB%93%E5%90%88PLL%E6%94%B9%E8%BF%9B%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%97%B6%E9%92%9F"><span class="toc-number">1.2.</span> <span class="toc-text">2.基于笔记15结合PLL改进设计的时钟</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1%E8%AE%BE%E8%AE%A1%E6%96%87%E4%BB%B6"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1设计文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2MMCM%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2MMCM设置</span></a></li></ol></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/07/20/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B014/" class="archive-article-date">
-  	<time datetime="2023-07-20T10:10:09.543Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-20</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/07/20/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B014/">FPGA笔记14</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/07/19/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B013/" class="archive-article-date">
-  	<time datetime="2023-07-19T02:25:04.302Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/07/19/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B013/">FPGA笔记13</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/07/18/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B012/" class="archive-article-date">
-  	<time datetime="2023-07-18T09:14:05.952Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/07/18/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B012/">FPGA笔记12</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/07/18/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B011/" class="archive-article-date">
-  	<time datetime="2023-07-18T05:57:43.369Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/07/18/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B011/">FPGA笔记11</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/07/18/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B010/" class="archive-article-date">
-  	<time datetime="2023-07-18T03:13:01.632Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/07/18/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B010/">FPGA笔记10</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/07/17/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B09/" class="archive-article-date">
-  	<time datetime="2023-07-17T02:42:03.721Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/07/17/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B09/">FPGA笔记9</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/07/16/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B08/" class="archive-article-date">
-  	<time datetime="2023-07-16T13:34:35.828Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/07/16/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B08/">FPGA笔记8</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/07/15/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B07/" class="archive-article-date">
-  	<time datetime="2023-07-15T14:08:41.033Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/07/15/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B07/">FPGA笔记7</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2023/07/page/2/">2</a><a class="extend next" rel="next" href="/archives/2023/07/page/2/">下一页</a>
-    </nav>
   
 
 
@@ -575,8 +343,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
