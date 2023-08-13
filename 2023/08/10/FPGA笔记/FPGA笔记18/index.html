@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>FPGA笔记18 | shuxuan&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="I2C项目学习记录通过学习I2C通信协议，并学习多种基于I2C协议读写eeprom的verilog代码结合FPGA上板验证 1. I2C通信协议基本概念1.1 I2C介绍 ​	I2C 总线（I2C bus，Inter-IC bus）是一个双向的两线连续总线，提供集成电路（ICs）之间的通信线路。I2C 总线是一种串行扩展技术，最早由 Philips 公司推出，广泛应用于电视，录像机和音频设备。I2">
+  <meta name="description" content="I2C项目学习记录通过学习I2C通信协议，并学习多种基于I2C协议读写eeprom的verilog代码结合FPGA上板验证">
 <meta property="og:type" content="article">
 <meta property="og:title" content="FPGA笔记18">
 <meta property="og:url" content="http://example.com/2023/08/10/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B018/index.html">
 <meta property="og:site_name" content="shuxuan&#39;s blog">
-<meta property="og:description" content="I2C项目学习记录通过学习I2C通信协议，并学习多种基于I2C协议读写eeprom的verilog代码结合FPGA上板验证 1. I2C通信协议基本概念1.1 I2C介绍 ​	I2C 总线（I2C bus，Inter-IC bus）是一个双向的两线连续总线，提供集成电路（ICs）之间的通信线路。I2C 总线是一种串行扩展技术，最早由 Philips 公司推出，广泛应用于电视，录像机和音频设备。I2">
+<meta property="og:description" content="I2C项目学习记录通过学习I2C通信协议，并学习多种基于I2C协议读写eeprom的verilog代码结合FPGA上板验证">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA18.1.png">
 <meta property="og:image" content="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA18.2.png">
@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA18.16.png">
 <meta property="og:image" content="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA18.17.png">
 <meta property="article:published_time" content="2023-08-10T07:21:08.072Z">
-<meta property="article:modified_time" content="2023-08-13T03:41:23.418Z">
+<meta property="article:modified_time" content="2023-08-13T03:51:27.449Z">
 <meta property="article:author" content="张舒宣">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -194,6 +194,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="I2C项目学习记录"><a href="#I2C项目学习记录" class="headerlink" title="I2C项目学习记录"></a>I2C项目学习记录</h1><p>通过学习I2C通信协议，并学习多种基于I2C协议读写eeprom的verilog代码结合FPGA上板验证</p>
+<span id="more"></span>
+
 <h2 id="1-I2C通信协议基本概念"><a href="#1-I2C通信协议基本概念" class="headerlink" title="1. I2C通信协议基本概念"></a>1. I2C通信协议基本概念</h2><p><strong>1.1 I2C介绍</strong></p>
 <p>​	I2C 总线（I2C bus，Inter-IC bus）是一个双向的两线连续总线，提供集成电路（ICs）之间的通信线路。I2C 总线是一种串行扩展技术，最早由 Philips 公司推出，广泛应用于电视，录像机和音频设备。I2C 总线的意思是“完成集成电路或功能单元之间信息交换的规范或协议”。Philips 公司推出的 I2C 总线采用一条数据线（SDA），加一条时钟线（SCL）来完成数据的传输及外围器件的扩展。I2C 总线物理拓扑结构如图 1.1 所示。</p>
 <p><img src="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA18.1.png"></p>
