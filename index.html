@@ -173,61 +173,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="1-PS定时器中断实验"><a href="#1-PS定时器中断实验" class="headerlink" title="1.PS定时器中断实验"></a>1.PS定时器中断实验</h1><ul>
-<li>xilinxUG585文档对ZYNQ有着详细说明</li>
-<li>中断寄存器（interrupt register），是2018年公布的计算机科学技术名词，指一种用于保存中断源的中断请求信息的专用寄存器。</li>
-<li>本实验设计一个 1 秒定时器中断一次，然后打印出信息，30 秒后结束。在 UG585 文档中我们得知，定时器的时钟频率为 CPU 频率的一半，首先要修改计数器最大值，修改为 CPU频率的一半，也就是计数器的时钟频率值，这样就会 1 秒中断一次</li>
-<li>Putty调试</li>
-</ul>
-<h1 id="2-PS端MIO的使用"><a href="#2-PS端MIO的使用" class="headerlink" title="2.PS端MIO的使用"></a>2.PS端MIO的使用</h1><p>本实验通过实现 PS 端 LED 灯的闪烁演示 MIO 的操作。</p>
-<ul>
-<li>利用MIO闪烁PS端LED灯</li>
-<li>利用改进后程序闪烁LED灯</li>
-<li>利用按键作为中断控制LED灯</li>
-</ul>
-<hr>
-<p>利用xilinx包含的头文件include中查看相应的信息（自带的函数声明，各个外设的基地址，器件ID，中断等等）</p>
-<img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/1.png" style="zoom:50%;" />
-
-<p>在 libsrc 文件夹中，包含外设函数的定义，使用说明</p>
-<p>在 src 文件夹下的 lscript.ld 中，定义了可用 memory 空间，栈和堆空间大小等，可根据需要修改。</p>
-<p>把鼠标光标放到宏定义或函数上，按下 F3 即可看到在哪里定义的，也可以按 Ctrl+鼠标左键进入。比如下面的 DEVICE_ID 即可进入 xparameter.h 中</p>
-<h1 id="3-PS端EMIO使用"><a href="#3-PS端EMIO使用" class="headerlink" title="3.PS端EMIO使用"></a>3.PS端EMIO使用</h1><p>MIO，Multiuse I&#x2F;O，称为复用输入&#x2F;输出，对应PS侧的可配置的多功能引脚。</p>
-<p>EMIO，Extent MIO，称为扩展复用输入&#x2F;输出，对应PL侧的可配置的多功能引脚。</p>
-<p>MIO是外设的基础引脚，因为MIO引脚数量较少，ZYNQ也提供了EMIO接口作为MIO的扩展，外设可通过EMIO接口路由到PL侧的引脚上，来实现与MIO几乎相同的功能。</p>
-<p>几乎相同也就意味着有些许不同，MIO和EMIO作为引脚不同的地方有3点：</p>
-<p>1.MIO对于PL侧是透明的，PL无法得到MIO引脚上的电平信息，而EMIO因为就是PL的引脚，所以PS可以通过EMIO与PL通信</p>
-<p>2.外设与MIO是固定搭配的，就是说要使用MIO作为外设引脚就必须是一组固定引脚。如下图，举个例子，如果你使用了MIO34作为UART0的一个引脚，那么UART0的另一个引脚必须是MIO35，USB1也是如此，除了GPIO比较特殊外，其它外设MIO都是一组一组起作用的，并且是产商预先定好的位置，不能任意指定，所以在设计硬件电路时，使用哪些引脚来连接外设要遵照这一特性。另外因为电路是确定的，使用MIO也不用指定引脚约束。</p>
-<p>EMIO相对灵活，引脚之间预先没有绑定，可任意指定，而且使用EMIO需要加引脚约束指定到PL确定的某个引脚。</p>
-<hr>
-<p><strong>本实验就是采用EMIO控制PL端LED</strong></p>
-<ul>
-<li>EMIO 点亮 PL 端 LED 灯</li>
-<li>EMIO 实现 PL 端按键中断</li>
-</ul>
-<h1 id="4-PL端AXI-GPIO的使用"><a href="#4-PL端AXI-GPIO的使用" class="headerlink" title="4.PL端AXI GPIO的使用"></a>4.PL端AXI GPIO的使用</h1><p>PS通过 AXI 总线控制gpio，使LED灯闪烁</p>
-<hr>
-<p>到本章结束已经把 <strong>ZYNQ 的 PS 端 MIO、EMIO，PL 端 GPIO</strong> 如何使用讲完了，包括输入和输出以及中断处理，这些都是最基础的操作，大家还是要多多思考，理解清楚</p>
-<h1 id="5-以太网实验（LWIP）"><a href="#5-以太网实验（LWIP）" class="headerlink" title="5.以太网实验（LWIP）"></a>5.以太网实验（LWIP）</h1><p>LWIP是一款轻量级的开源TCP&#x2F;IP协议栈，由SICS（瑞典国家计算机科学院）的Adam Dunkels等人联合研发。</p>
-<p>LWIP可以运行在有操作系统的硬件中，也可以在无操作系统的情况下运行，其设计的关键在于保留TCP协议大部分核心功能的前提下减少了对硬件RAM的使用，LWIP运行只需要20KB的RAM和不到50KB的ROM。</p>
-<p>LWIP因其开源的特性，以及对硬件电路性能影响较小的优点，在低端嵌入式系统中被广泛应用。</p>
-<p>LWIP协议栈的设计主要思想是减少协议栈对内存的占用和代码的规模。</p>
-<h1 id="6-自定义IP实验（PWM呼吸灯）"><a href="#6-自定义IP实验（PWM呼吸灯）" class="headerlink" title="6.自定义IP实验（PWM呼吸灯）"></a>6.自定义IP实验（PWM呼吸灯）</h1><p>通过自己设计IP，了解自定义IP在vitis中的使用过程</p>
-<h1 id="7-PS端UART控制"><a href="#7-PS端UART控制" class="headerlink" title="7.PS端UART控制"></a>7.PS端UART控制</h1><h1 id="8-XADC的使用"><a href="#8-XADC的使用" class="headerlink" title="8.XADC的使用"></a>8.XADC的使用</h1><p>本章介绍 XADC 的使用，XADC 内嵌在 PS 端，允许 CPU 或其他主机连接 XADC，而不用使用 PL 端。XADC 最大采样率为 1MSPS，精度为 12bits，内置电压和温度传感器，可监测芯片的电压及温度信息。如图所示电压传感器可监测芯片的 VCCINT,VCCAUX,VCCBRAM 等，VP_0 和VN_0 为一对专用的 ADC 模拟输入口。VAUXP[<em>]和 VAUXN[</em>]也是 ADC 输入口，但是不用作 ADC输入口时，可用作普通 IO 使用。在 AX7015&#x2F;AX7021&#x2F;AX7010&#x2F;AX7020&#x2F;AX7Z035&#x2F;AX7Z100 开发板上这些引脚均未引出。因此本实验主要测量温度传感器 Temperature Sensor 以及电压传感器Supply Sensors 的值。</p>
-<hr>
-<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/x.png"></p>
-<h1 id="9-双核AMP的使用"><a href="#9-双核AMP的使用" class="headerlink" title="9.双核AMP的使用"></a>9.双核AMP的使用</h1><p>前面的例程都是采用的单核 CPU，在有些情况下，比如多任务处理，并行处理等，需要用到双核 CPU，本章将简单介绍双核的使用方法。并将实现以下功能：</p>
-<ol>
-<li><p>CPU0 实现 PS 端按键中断，控制 PS 端 LED 的亮灭，并向 CPU1 发出软件中断，让CPU1 打印 CPU0 内存空间的一串字符</p>
-</li>
-<li><p>CPU1 实现 PL 端按键中断，控制 PL 端 LED 的亮灭，并向 CPU0 发出软件中断，让CPU0 打印 CPU1 内存空间的一串字符</p>
-</li>
-<li><p>内存空间的划分，共享内存空间的使用</p>
-</li>
-<li><p>FSBL 启动 Flash</p>
-</li>
-</ol>
-
+        <h1 id="1-PS定时器中断实验"><a href="#1-PS定时器中断实验" class="headerlink" title="1.PS定时器中断实验"></a>1.PS定时器中断实验</h1>
+        
       
 
       

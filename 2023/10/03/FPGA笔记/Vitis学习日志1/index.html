@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>Vitis官方例程学习日志 | shuxuan&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.PS定时器中断实验 xilinxUG585文档对ZYNQ有着详细说明 中断寄存器（interrupt register），是2018年公布的计算机科学技术名词，指一种用于保存中断源的中断请求信息的专用寄存器。 本实验设计一个 1 秒定时器中断一次，然后打印出信息，30 秒后结束。在 UG585 文档中我们得知，定时器的时钟频率为 CPU 频率的一半，首先要修改计数器最大值，修改为 CPU频率的">
+  <meta name="description" content="1.PS定时器中断实验">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vitis官方例程学习日志">
 <meta property="og:url" content="http://example.com/2023/10/03/FPGA%E7%AC%94%E8%AE%B0/Vitis%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%971/index.html">
 <meta property="og:site_name" content="shuxuan&#39;s blog">
-<meta property="og:description" content="1.PS定时器中断实验 xilinxUG585文档对ZYNQ有着详细说明 中断寄存器（interrupt register），是2018年公布的计算机科学技术名词，指一种用于保存中断源的中断请求信息的专用寄存器。 本实验设计一个 1 秒定时器中断一次，然后打印出信息，30 秒后结束。在 UG585 文档中我们得知，定时器的时钟频率为 CPU 频率的一半，首先要修改计数器最大值，修改为 CPU频率的">
+<meta property="og:description" content="1.PS定时器中断实验">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/1.png">
 <meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/x.png">
 <meta property="article:published_time" content="2023-10-03T00:28:10.603Z">
-<meta property="article:modified_time" content="2023-10-04T08:16:59.969Z">
+<meta property="article:modified_time" content="2023-10-05T02:10:29.685Z">
 <meta property="article:author" content="张舒宣">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
@@ -179,7 +179,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="1-PS定时器中断实验"><a href="#1-PS定时器中断实验" class="headerlink" title="1.PS定时器中断实验"></a>1.PS定时器中断实验</h1><ul>
+        <h1 id="1-PS定时器中断实验"><a href="#1-PS定时器中断实验" class="headerlink" title="1.PS定时器中断实验"></a>1.PS定时器中断实验</h1><span id="more"></span>
+
+<ul>
 <li>xilinxUG585文档对ZYNQ有着详细说明</li>
 <li>中断寄存器（interrupt register），是2018年公布的计算机科学技术名词，指一种用于保存中断源的中断请求信息的专用寄存器。</li>
 <li>本实验设计一个 1 秒定时器中断一次，然后打印出信息，30 秒后结束。在 UG585 文档中我们得知，定时器的时钟频率为 CPU 频率的一半，首先要修改计数器最大值，修改为 CPU频率的一半，也就是计数器的时钟频率值，这样就会 1 秒中断一次</li>
