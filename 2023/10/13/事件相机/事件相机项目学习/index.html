@@ -6,23 +6,32 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>FPGA笔记17 | shuxuan&#39;s blog</title>
+  <title>事件相机项目学习 | shuxuan&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="VGA原理以及verilog设计">
+  <meta name="description" content="项目学习0 基础理论0.1事件相机事件相机的原理与应用简介 - 知乎 (zhihu.com) 0.2 FPGA的启动方式Xilinx ZYNQ 7000+Vivado2015.2系列（五）之ZYNQ的三种启动方式-JTAG、SD card、Flash_zynq各类启动方式的区别-CSDN博客 后缀名.bit的文件，是配置FPGA的比特流文件；.tcl文件，是初始化所用到的脚本文件；.elf文件，是">
 <meta property="og:type" content="article">
-<meta property="og:title" content="FPGA笔记17">
-<meta property="og:url" content="http://example.com/2023/07/22/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B017/index.html">
+<meta property="og:title" content="事件相机项目学习">
+<meta property="og:url" content="http://example.com/2023/10/13/%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA/%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="shuxuan&#39;s blog">
-<meta property="og:description" content="VGA原理以及verilog设计">
+<meta property="og:description" content="项目学习0 基础理论0.1事件相机事件相机的原理与应用简介 - 知乎 (zhihu.com) 0.2 FPGA的启动方式Xilinx ZYNQ 7000+Vivado2015.2系列（五）之ZYNQ的三种启动方式-JTAG、SD card、Flash_zynq各类启动方式的区别-CSDN博客 后缀名.bit的文件，是配置FPGA的比特流文件；.tcl文件，是初始化所用到的脚本文件；.elf文件，是">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA17.1.png">
-<meta property="og:image" content="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA17.2.png">
-<meta property="article:published_time" content="2023-07-22T11:32:37.905Z">
-<meta property="article:modified_time" content="2023-07-23T06:57:50.952Z">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/1.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/x.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/CLKI_ctrl_0.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/hpgp.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/smartconnect.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/1.3Processor%2520System%2520Reset.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/DMA.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/axis_data_fifo_0.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/constant.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/mipi.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/mipi1.png">
+<meta property="article:published_time" content="2023-10-13T07:11:11.712Z">
+<meta property="article:modified_time" content="2023-10-13T06:38:01.882Z">
 <meta property="article:author" content="张舒宣">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA17.1.png">
+<meta name="twitter:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/1.png">
   
     <link rel="alternative" href="/atom.xml" title="shuxuan&#39;s blog" type="application/atom+xml">
   
@@ -159,65 +168,126 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-FPGA笔记/FPGA笔记17" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-事件相机/事件相机项目学习" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      FPGA笔记17
+      事件相机项目学习
     </h1>
   
 
         
-        <a href="/2023/07/22/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B017/" class="archive-article-date">
-  	<time datetime="2023-07-22T11:32:37.905Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-22</time>
+        <a href="/2023/10/13/%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA/%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/" class="archive-article-date">
+  	<time datetime="2023-10-13T07:11:11.712Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-10-13</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="VGA原理以及verilog设计"><a href="#VGA原理以及verilog设计" class="headerlink" title="VGA原理以及verilog设计"></a>VGA原理以及verilog设计</h1><span id="more"></span>
+        <h1 id="项目学习"><a href="#项目学习" class="headerlink" title="项目学习"></a>项目学习</h1><h2 id="0-基础理论"><a href="#0-基础理论" class="headerlink" title="0 基础理论"></a>0 基础理论</h2><h3 id="0-1事件相机"><a href="#0-1事件相机" class="headerlink" title="0.1事件相机"></a>0.1事件相机</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/581835811?utm_id=0">事件相机的原理与应用简介 - 知乎 (zhihu.com)</a></p>
+<h3 id="0-2-FPGA的启动方式"><a href="#0-2-FPGA的启动方式" class="headerlink" title="0.2 FPGA的启动方式"></a>0.2 FPGA的启动方式</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u014485485/article/details/78324183/">Xilinx ZYNQ 7000+Vivado2015.2系列（五）之ZYNQ的三种启动方式-JTAG、SD card、Flash_zynq各类启动方式的区别-CSDN博客</a></p>
+<p>后缀名.bit的文件，是配置FPGA的比特流文件；.tcl文件，是初始化所用到的脚本文件；.elf文件，是用于下载调试的文件</p>
+<p>要想在外设程序中直接启动，需要对程序在板子中进行固化。固化需要三个文件：FSBL.elf、该工程的bit文件、该工程的elf文件，由这三个文件制作一个BOOT.bin文件</p>
+<p>QSPI（Quad SPI）是四线SPI模式的一种扩展；QPSI Flash 是一种存储器芯片</p>
+<h2 id="1-FPGA架构"><a href="#1-FPGA架构" class="headerlink" title="1 FPGA架构"></a>1 FPGA架构</h2><h3 id="1-1ZYNQ"><a href="#1-1ZYNQ" class="headerlink" title="1.1ZYNQ"></a>1.1ZYNQ</h3><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/1.png" style="zoom: 67%;" />
 
-<h2 id="1-VGA时序"><a href="#1-VGA时序" class="headerlink" title="1.VGA时序"></a>1.VGA时序</h2><p><img src="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA17.1.png"> </p>
-<blockquote>
-<p>设计思路：找到时间节点</p>
-</blockquote>
-<blockquote>
-<p>行同步脉冲的开始位置HS_Begin       &#x3D; 0</p>
-<p>行同步脉冲的结束位置HS_End          &#x3D; 96</p>
-<p>行数据开始输出的位置Hdat_Begin   &#x3D; 96 + 40 + 8</p>
-<p>行数据停止输出的位置Hdat_End      &#x3D; 96 + 40 + 8 + 640</p>
-<p>行同步信号的结束位置Hsync_End    &#x3D; 96 + 40 + 8 + 640 + 8 + 8</p>
-</blockquote>
-<blockquote>
-<p>场同步脉冲的开始位置VS_Begin       &#x3D; 0</p>
-<p>场同步脉冲的结束位置VS_End          &#x3D;  2（line）</p>
-<p>场数据开始输出的位置Vdat_Begin   &#x3D; 2 + 25 + 8</p>
-<p>场数据停止输出的位置Vdat_End      &#x3D; 2 + 25 + 8 + 480</p>
-<p>场同步信号的结束位置Vsync_End    &#x3D; 2 + 25 + 8 + 480 + 2 + 8</p>
-</blockquote>
+<hr>
 <ul>
-<li><strong>板级验证需求</strong></li>
+<li><strong>GPIO</strong>：通用接口</li>
+<li><strong>ZYNQ-GPIO_0</strong>:EMIO GPIO 宽度6位，作为外部接口GPIO_0_0 接到相机上</li>
 </ul>
-<p>VGA 的板级验证，主要验证以下三个方面：</p>
-<p>1、能够正确的全屏点亮屏幕，显示稳定</p>
-<p>2、能否正确的显示颜色，即按照需求制定需要显示的颜色</p>
-<p>3、能否正确的定位坐标，即实现在指定的位置显示对应的数据</p>
-<p><img src="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA17.2.png"></p>
-<blockquote>
-<p>当行扫描范围在 0~319 这一段像素内时，第 0 列处于活跃阶段；</p>
-<p>当扫描范围在 320~639 这一段像素内时，第 1 列处于活跃阶段。</p>
-<p>当行扫描范围在 0~119 这一段像素内时，第 0 行处于活跃阶段；</p>
-<p>当行扫描范围在 120~239 这一段像素内时，第 1 行处于活跃阶段；</p>
-<p>当行扫描范围在 240~359 这一段像素内时，第 2 行处于活跃阶段；</p>
-<p>当行扫描范围在 360~479 这一段像素内时，第 3 行处于活跃阶段；</p>
-</blockquote>
-<h2 id="2-设计文件"><a href="#2-设计文件" class="headerlink" title="2.设计文件"></a>2.设计文件</h2><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> VGA_CTRL(</span><br><span class="line">    Clk,</span><br><span class="line">    Reset_n,</span><br><span class="line">    Data,</span><br><span class="line">    Data_Req,</span><br><span class="line">    hcount,</span><br><span class="line">    vcount,</span><br><span class="line">    VGA_HS,</span><br><span class="line">    VGA_VS,</span><br><span class="line">    VGA_BLK,</span><br><span class="line">    VGA_RGB</span><br><span class="line">);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">input</span> Clk;  </span><br><span class="line">    <span class="keyword">input</span> Reset_n;</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">23</span>:<span class="number">0</span>]Data;</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> Data_Req;</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> [<span class="number">9</span>:<span class="number">0</span>]hcount;<span class="comment">//当前扫描点的h坐标</span></span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> [<span class="number">9</span>:<span class="number">0</span>]vcount;<span class="comment">//当前扫描点的v坐标</span></span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> VGA_HS;    </span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> VGA_VS;   </span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> VGA_BLK; </span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> [<span class="number">23</span>:<span class="number">0</span>]VGA_RGB;<span class="comment">//&#123;R[7:0]、G[7:0]、B[7:0]&#125;</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">localparam</span> Hsync_End = <span class="number">800</span>;</span><br><span class="line">    <span class="keyword">localparam</span> HS_End = <span class="number">96</span>;</span><br><span class="line">    <span class="keyword">localparam</span> Vsync_End = <span class="number">525</span>;</span><br><span class="line">    <span class="keyword">localparam</span> VS_End = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">localparam</span> Hdat_Begin = <span class="number">144</span>;</span><br><span class="line">    <span class="keyword">localparam</span> Hdat_End = <span class="number">784</span>;</span><br><span class="line">    <span class="keyword">localparam</span> Vdat_Begin = <span class="number">35</span>;</span><br><span class="line">    <span class="keyword">localparam</span> Vdat_End = <span class="number">515</span>;</span><br><span class="line">     </span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">9</span>:<span class="number">0</span>]hcnt;<span class="comment">//行扫描计数器</span></span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        hcnt &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(hcnt == Hsync_End - <span class="number">1</span>)</span><br><span class="line">        hcnt &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        hcnt &lt;= hcnt + <span class="number">1&#x27;b1</span>;</span><br><span class="line">    </span><br><span class="line"><span class="comment">//    assign VGA_HS = (hcnt &lt;= HS_End - 1&#x27;b1)?0:1;</span></span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk)</span><br><span class="line">        VGA_HS = (hcnt &lt;= HS_End)?<span class="number">0</span>:<span class="number">1</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">9</span>:<span class="number">0</span>]vcnt;<span class="comment">//场扫描计数器</span></span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        vcnt &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(hcnt == Hsync_End - <span class="number">1</span>)<span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span>(vcnt &gt;= Vsync_End - <span class="number">1</span>)</span><br><span class="line">            vcnt &lt;= <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            vcnt &lt;= vcnt + <span class="number">1&#x27;b1</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        vcnt &lt;= vcnt;</span><br><span class="line">        </span><br><span class="line"><span class="comment">//    assign VGA_VS = (vcnt &lt; VS_End - 1&#x27;b1)?0:1;</span></span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk)</span><br><span class="line">        VGA_VS = (vcnt &lt; VS_End)?<span class="number">0</span>:<span class="number">1</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//BLK表示的就是数据输出的阶段</span></span><br><span class="line"><span class="comment">//    assign VGA_BLK = ((hcnt &gt;= Hdat_Begin - 1) &amp;&amp; (hcnt &lt; Hdat_End - 1) &amp;&amp; (vcnt &gt;= Vdat_Begin - 1) &amp;&amp; (vcnt &lt; Vdat_End))?1:0;</span></span><br><span class="line"><span class="comment">//    always@(posedge Clk)</span></span><br><span class="line"><span class="comment">//        VGA_BLK = ((hcnt &gt;= Hdat_Begin - 1) &amp;&amp; (hcnt &lt; Hdat_End - 1) &amp;&amp; (vcnt &gt;= Vdat_Begin - 1) &amp;&amp; (vcnt &lt; Vdat_End))?1:0;</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk)</span><br><span class="line">        Data_Req &lt;= (hcnt &gt;= Hdat_Begin - <span class="number">1</span>) &amp;&amp; (hcnt &lt; Hdat_End - <span class="number">1</span>) &amp;&amp; (vcnt &gt;= Vdat_Begin) &amp;&amp; (vcnt &lt; Vdat_End);</span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk)</span><br><span class="line">        VGA_BLK &lt;= Data_Req;</span><br><span class="line"></span><br><span class="line"><span class="comment">//    assign VGA_RGB = VGA_BLK ? Data : 0;</span></span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk)</span><br><span class="line">        VGA_RGB = VGA_BLK ? Data:<span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">     <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk)</span><br><span class="line">        hcount &lt;= Data_Req?hcnt - Hdat_Begin:<span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk)</span><br><span class="line">        vcount &lt;= Data_Req?vcnt - Vdat_Begin:<span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li><strong>DDR</strong>：高速随机存储器</li>
+<li>ZYNQ-DDR 外接为DDR</li>
+</ul>
+<img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/x.png" style="zoom: 80%;" />
 
-<h2 id="3-仿真文件"><a href="#3-仿真文件" class="headerlink" title="3.仿真文件"></a>3.仿真文件</h2><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">`<span class="keyword">timescale</span> 1ns / 1ps</span></span><br><span class="line"><span class="keyword">module</span> VGA_CTRL_tb;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span> Clk;  </span><br><span class="line">    <span class="keyword">reg</span> Reset_n;</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">23</span>:<span class="number">0</span>]Data;</span><br><span class="line">    <span class="keyword">wire</span> Data_Req;</span><br><span class="line">    <span class="keyword">wire</span> VGA_HS;    </span><br><span class="line">    <span class="keyword">wire</span> VGA_VS;   </span><br><span class="line">    <span class="keyword">wire</span> VGA_BLK; </span><br><span class="line">    <span class="keyword">wire</span> [<span class="number">23</span>:<span class="number">0</span>]VGA_RGB;</span><br><span class="line"></span><br><span class="line">    VGA_CTRL VGA_CTRL(</span><br><span class="line">        Clk,</span><br><span class="line">        Reset_n,</span><br><span class="line">        Data,</span><br><span class="line">        Data_Req,</span><br><span class="line">        VGA_HS,</span><br><span class="line">        VGA_VS,</span><br><span class="line">        VGA_BLK,</span><br><span class="line">        VGA_RGB</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">initial</span> Clk = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">always</span> #<span class="number">20</span> Clk = ~Clk;<span class="comment">//25MHz时钟</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//HS的变化位置</span></span><br><span class="line">    <span class="comment">//VS的变化位置</span></span><br><span class="line">    <span class="comment">//待显示数据和HS、VS的位置关系</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">        Reset_n = <span class="number">0</span>;</span><br><span class="line">        #<span class="number">201</span>;</span><br><span class="line">        Reset_n = <span class="number">1</span>;</span><br><span class="line">        #<span class="number">20000000</span>;</span><br><span class="line">        <span class="built_in">$stop</span>;   </span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        Data &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(!VGA_BLK)</span><br><span class="line">        Data &lt;= Data;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        Data &lt;= Data + <span class="number">1&#x27;d1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li><strong>FIXED_IO</strong>：固定IO口</li>
+<li><strong>ZYNQ-FIXED_IO</strong>：包括MIO、DDR_VRN、DDR_VRP、PS_SRSTB、PS_CLK、PS_PORB、作为外接端口FIXED_IO PS端自带的IO口，用不到不用管，配置完IP自己自动约束</li>
+</ul>
+<hr>
+<ul>
+<li><strong>IIC_0</strong>：外接cam_i2c 控制相机</li>
+</ul>
+<hr>
+<ul>
+<li><strong>CLKI_ctrl_v1_0</strong>：例化的是CLKI_ctrl模块，将时钟和时钟复位结合到一起 作为相机的时钟</li>
+<li>模块图：</li>
+</ul>
+<img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/CLKI_ctrl_0.png" style="zoom:67%;" />
+
+<hr>
+<ul>
+<li><strong>AXI</strong></li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43373901/article/details/125787898">AXI协议详解-CSDN博客</a></p>
+<p>AXI向下兼容APB、AHB接口</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43373901/article/details/125785294">AHB协议详解-CSDN博客</a></p>
+<p>APB详解： <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43373901/article/details/125785294">https://blog.csdn.net/weixin_43373901/article/details/125785294</a></p>
+<p>在ZYNQ7处理器系统IP core中，在PS-PL Configuration下的AXI Non Secure Enablement下有一个GP Master AXI Interface选项，可选一个M_AXI_GP0接口。</p>
+<p>该接口的作用是对PL侧的IP core通过<strong>AXI-Lite</strong>总线进行配置，如果不仅需要的话直接不使能即可。</p>
+<hr>
+<ul>
+<li><strong>GP HP</strong></li>
+</ul>
+<p>对于GP接口（general purpose）通用目的接口，有四个接口（两个从端口，两个主端口）；HP接口（high-performance purpose）高性能接口，有四个接口（四个都是从端口）。GP接口直接连接到的是中央互联区（central interconnect），然后由中央互联区再连接到OCM interconnect和存储器接口上；而HP接口直接连接到的是OCM interconnect和存储器接口。所以对于GP接口，通常使用它进行控制配置；而对于HP接口，通常使用它进行数据传输交互。<br><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/hpgp.png"></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/luoganttcc/article/details/127969047">ZYNQ-AXI_GP接口和AXI_HP接口的异同_axi hp接口-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45937291/article/details/129771811">AXI4协议之AXI4-Lite接口详解及实战_axi4 lite_高阶近似的博客-CSDN博客</a></p>
+<h3 id="1-2-AXI-SmartConnect"><a href="#1-2-AXI-SmartConnect" class="headerlink" title="1.2 AXI SmartConnect"></a>1.2 AXI SmartConnect</h3><p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/smartconnect.png"></p>
+<p>​	AXI smartconnect 是为了一个或多个主机通过AXI总线和一个或多个从机进行数据读写而用的，此前常用的应该是AXI interconnect这个IP，实质上smartconnect是interconnect的升级版，使用更加方便一些，延时流和流水线优化的更好些，但是相对的资源就会占用更多。</p>
+<ul>
+<li>AXI smartconnect最高支持主机从机的数量可达16个，如果有更多的需求，则需要更多的smartconnect来支持。</li>
+<li>AXI smartconnect支持主从机不同时钟域、不同数据位宽的自动切换（一个突发还没接口位宽大的时候，smartconnect会选择存缓存里，攒一起传）。</li>
+<li>此外smartconnect还支持数据读写错误的提示。</li>
+</ul>
+<h3 id="1-3-Processor-System-Reset"><a href="#1-3-Processor-System-Reset" class="headerlink" title="1.3 Processor System Reset"></a>1.3 Processor System Reset</h3><p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/1.3Processor%2520System%2520Reset.png"></p>
+<p>相当于系统的复位模块，使用FCLK_CLK2时钟，ext_reset_in接ZYNQ的FCLK_RESET2_N，再由peripheral_aresetn连接到各个模块的复位端口以控制同步复位</p>
+<h3 id="1-4-AXI-Direct-Memory-Access"><a href="#1-4-AXI-Direct-Memory-Access" class="headerlink" title="1.4 AXI Direct Memory Access"></a>1.4 AXI Direct Memory Access</h3><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/DMA.png" style="zoom: 50%;" />
+
+<p>&#x3D;&#x3D;直接内存访问（DMA，Direct Memory Access）&#x3D;&#x3D;是一些计算机总线架构提供的功能，它能使数据从附加设备（如磁盘驱动器）直接发送到计算机主板的内存上。DMA接口是硬件内部实现通信的一种接口，理解为数据处理发送的一种缓冲端口</p>
+<p>DMA是一种内存访问技术，允许某些计算机内部的硬件子系统可以独立的直接读写内存，而不需要CPU介入处理，从而不需要CPU的大量中断负载，否则，CPU需要从来源把每一片段的数据复制到寄存器，然后在把他们再次写回到新的地方，在这个时间里，CPU就无法执行其他的任务。</p>
+<p>DMA是一种快速数据传送方式，通常用来传送数据量较多的数据块。使用DMA时，CPU向DMA控制器发送一个存储器传输请求，这样当DMA控制器在传输的时候，CPU执行其他的操作，传输完成时DMA以中断的方式通知CPU。</p>
+<p><strong>S_AXI_LITE是ARM配置dma寄存器的接口，M_AXI_SG是从（往）存储器加载（上传）buffer descriptor的接口，剩下4个构成两对接口，S2MM和MM2S表示数据的方向，AXI是存储器一侧的接口，AXIS是FPGA一侧的接口。</strong></p>
+<hr>
+<p>几篇讲解DMA的博客:crab:</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/batianhu/p/zynq_axidma_xiangjie1.html">【原创】ZYNQ AXIDMA详解（一） - 霸天虎1108 - 博客园 (cnblogs.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_15127661/4147263">基于Xilinx FPGA的AXI Direct Memory Access (Scatter Gather Engine模式) 行为分析及软件操作流程</a></p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1652913">AXI DMA详解与应用篇 |第一讲-腾讯云开发者社区-腾讯云 (tencent.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_46521579/article/details/130182492">AXI DMA-CSDN博客</a></p>
+<p>在黑金的官方学习教程中的    course_s2_ALINX_ZYNQ(AX7010_AX7020)开发平台Vitis应用教程V1.04   第15章有DMA的环通实验，其中也有对DMA的介绍</p>
+<h3 id="1-5-AXI4-Stream-Data-FIFO"><a href="#1-5-AXI4-Stream-Data-FIFO" class="headerlink" title="1.5 AXI4-Stream Data FIFO"></a>1.5 AXI4-Stream Data FIFO</h3><p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/axis_data_fifo_0.png"></p>
+<p>AXI4 STREAM DATA FIFO是输入输出接口均为AXIS接口的数据缓存器，和其他fifo一样是先进先出形式。可以在跨时钟域的应用中用于数据缓冲，避免亚稳态出现。支持数据的分割和数据拼接。在使用该IP核之前，我们应该熟悉该IP核的各种参数设定的含义。</p>
+<h3 id="1-6-Constant-IP"><a href="#1-6-Constant-IP" class="headerlink" title="1.6 Constant IP"></a>1.6 Constant IP</h3><p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/constant.png"></p>
+<p>使用说明文件：pb040-xilinx-com-ip-xlconstant</p>
+<p>功能：自定义一个n位的端口，设置端口固定值以自定义驱动自己设计模块的某个端口</p>
+<h3 id="1-7-MIPI接口"><a href="#1-7-MIPI接口" class="headerlink" title="1.7 MIPI接口"></a>1.7 MIPI接口</h3><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/mipi.png" style="zoom:67%;" />
+
+<img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/mipi1.png" style="zoom:67%;" />
+
+<p><strong>手册名称：pg232-mipi-csi2-rx</strong> 对应的接口功能可以在里面查到</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/647192566">【科普贴】MIPI协议之D-PHY协议详解 - 知乎 (zhihu.com)</a></p>
+<h2 id="2-VITIS"><a href="#2-VITIS" class="headerlink" title="2 VITIS"></a>2 VITIS</h2><h3 id="2-0-基础概念"><a href="#2-0-基础概念" class="headerlink" title="2.0 基础概念"></a>2.0 基础概念</h3><p><strong>lwIP</strong>：LwIP是Light Weight (轻型)IP协议，有无<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/192?fromModule=lemma_inlink">操作系统</a>的支持都可以运行。LwIP实现的重点是在保持<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/TCP%E5%8D%8F%E8%AE%AE/8988699?fromModule=lemma_inlink">TCP协议</a>主要功能的基础上减少对RAM 的占用，它只需十几KB的RAM和40K左右的ROM就可以运行，这使LwIP协议栈适合在低端的嵌入式系统中使用。</p>
+<p><strong>U</strong>在C语言中代表无符号数据类型</p>
+<p><strong>s32</strong>是signed long</p>
+<p><strong>条件编译</strong></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_72935001/article/details/126548645?ops_request_misc=%7B%22request_id%22:%22169709968616800215034217%22,%22scm%22:%2220140713.130102334..%22%7D&request_id=169709968616800215034217&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-126548645-null-null.142%5Ev96%5Epc_search_result_base4&utm_term=%E6%9D%A1%E4%BB%B6%E7%BC%96%E8%AF%91&spm=1018.2226.3001.4187">【C语言】详谈条件编译-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44788542/article/details/130922902">C语言#if，#ifdef，#ifndef条件编译用法汇总_吾爱技术圈的博客-CSDN博客</a></p>
+<h3 id="2-1-代码分析"><a href="#2-1-代码分析" class="headerlink" title="2.1 代码分析"></a>2.1 代码分析</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;xscugic.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//xscugic.h该文件包含配置zynq中断控制器的库函数以及GIC的使用范围;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">XScuGic XScuGicInst;</span><br><span class="line"><span class="comment">//结构体定义</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	XScuGic_Config *Config;  <span class="comment">/**&lt; Configuration table entry */</span></span><br><span class="line">	u32 IsReady;		 <span class="comment">/**&lt; Device is initialized and ready */</span></span><br><span class="line">	u32 UnhandledInterrupts; <span class="comment">/**&lt; Intc Statistics */</span></span><br><span class="line">&#125; XScuGic;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">XIicPs cam_i2c;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">	XIicPs_Config Config;	<span class="comment">/* Configuration structure */</span></span><br><span class="line">	u32 IsReady;		<span class="comment">/* Device is initialized and ready */</span></span><br><span class="line">	u32 Options;		<span class="comment">/* Options set in the device */</span></span><br><span class="line"></span><br><span class="line">	u8 *SendBufferPtr;	<span class="comment">/* Pointer to send buffer */</span></span><br><span class="line">	u8 *RecvBufferPtr;	<span class="comment">/* Pointer to recv buffer */</span></span><br><span class="line">	s32 SendByteCount;	<span class="comment">/* Number of bytes still expected to send */</span></span><br><span class="line">	s32 RecvByteCount;	<span class="comment">/* Number of bytes still expected to receive */</span></span><br><span class="line">	s32 CurrByteCount;	<span class="comment">/* No. of bytes expected in current transfer */</span></span><br><span class="line"></span><br><span class="line">	s32 UpdateTxSize;	<span class="comment">/* If tx size register has to be updated */</span></span><br><span class="line">	s32 IsSend;		<span class="comment">/* Whether master is sending or receiving */</span></span><br><span class="line">	s32 IsRepeatedStart;	<span class="comment">/* Indicates if user set repeated start */</span></span><br><span class="line">	s32 Is10BitAddr;	<span class="comment">/* Indicates if user set 10 bit address */</span></span><br><span class="line"></span><br><span class="line">	XIicPs_IntrHandler StatusHandler;  <span class="comment">/* Event handler function */</span></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined  (XCLOCKING)</span></span><br><span class="line">	u32 IsClkEnabled;	<span class="comment">/**&lt; Input clock enabled */</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">	<span class="type">void</span> *CallBackRef;	<span class="comment">/* Callback reference for event handler */</span></span><br><span class="line">&#125; XIicPs;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> XGpioPs psGpioInst;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">	XGpioPs_Config GpioConfig;	<span class="comment">/**&lt; Device configuration */</span></span><br><span class="line">	u32 IsReady;			<span class="comment">/**&lt; Device is initialized and ready */</span></span><br><span class="line">	XGpioPs_Handler Handler;	<span class="comment">/**&lt; Status handlers for all banks */</span></span><br><span class="line">	<span class="type">void</span> *CallBackRef; 		<span class="comment">/**&lt; Callback ref for bank handlers */</span></span><br><span class="line">	u32 Platform;			<span class="comment">/**&lt; Platform data */</span></span><br><span class="line">	u32 MaxPinNum;			<span class="comment">/**&lt; Max pins in the GPIO device */</span></span><br><span class="line">	u8 MaxBanks;			<span class="comment">/**&lt; Max banks in a GPIO device */</span></span><br><span class="line">        u32 PmcGpio;                    <span class="comment">/**&lt; Flag for accessing PS GPIO for versal*/</span></span><br><span class="line">&#125; XGpioPs;</span><br></pre></td></tr></table></figure>
+
+
 
 
       
@@ -288,7 +358,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://himmy0830.github.io/2023/07/22/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B017/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://himmy0830.github.io/2023/10/13/%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA/%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -302,18 +372,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2023/08/10/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B018/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          FPGA笔记18
-        
-      </div>
-    </a>
   
-  
-    <a href="/2023/07/22/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B016/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">FPGA笔记16</div>
+    <a href="/2023/10/03/FPGA%E7%AC%94%E8%AE%B0/Vitis%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%971/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Vitis官方例程学习日志</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -340,7 +401,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#VGA%E5%8E%9F%E7%90%86%E4%BB%A5%E5%8F%8Averilog%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.</span> <span class="toc-text">VGA原理以及verilog设计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-VGA%E6%97%B6%E5%BA%8F"><span class="toc-number">1.1.</span> <span class="toc-text">1.VGA时序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%AE%BE%E8%AE%A1%E6%96%87%E4%BB%B6"><span class="toc-number">1.2.</span> <span class="toc-text">2.设计文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BB%BF%E7%9C%9F%E6%96%87%E4%BB%B6"><span class="toc-number">1.3.</span> <span class="toc-text">3.仿真文件</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">项目学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-%E5%9F%BA%E7%A1%80%E7%90%86%E8%AE%BA"><span class="toc-number">1.1.</span> <span class="toc-text">0 基础理论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#0-1%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA"><span class="toc-number">1.1.1.</span> <span class="toc-text">0.1事件相机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0-2-FPGA%E7%9A%84%E5%90%AF%E5%8A%A8%E6%96%B9%E5%BC%8F"><span class="toc-number">1.1.2.</span> <span class="toc-text">0.2 FPGA的启动方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-FPGA%E6%9E%B6%E6%9E%84"><span class="toc-number">1.2.</span> <span class="toc-text">1 FPGA架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1ZYNQ"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.1ZYNQ</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-AXI-SmartConnect"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2 AXI SmartConnect</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-Processor-System-Reset"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.3 Processor System Reset</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-AXI-Direct-Memory-Access"><span class="toc-number">1.2.4.</span> <span class="toc-text">1.4 AXI Direct Memory Access</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-AXI4-Stream-Data-FIFO"><span class="toc-number">1.2.5.</span> <span class="toc-text">1.5 AXI4-Stream Data FIFO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-Constant-IP"><span class="toc-number">1.2.6.</span> <span class="toc-text">1.6 Constant IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-7-MIPI%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.2.7.</span> <span class="toc-text">1.7 MIPI接口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-VITIS"><span class="toc-number">1.3.</span> <span class="toc-text">2 VITIS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-0-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="toc-number">1.3.1.</span> <span class="toc-text">2.0 基础概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.1 代码分析</span></a></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>
