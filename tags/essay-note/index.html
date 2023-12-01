@@ -6,23 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>FPGA笔记10 | shuxuan&#39;s blog</title>
+  <title>Tag: essay note | shuxuan&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="串口接收程序设计及调试">
-<meta property="og:type" content="article">
-<meta property="og:title" content="FPGA笔记10">
-<meta property="og:url" content="http://example.com/2023/07/18/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B010/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="shuxuan&#39;s blog">
+<meta property="og:url" content="http://example.com/tags/essay-note/index.html">
 <meta property="og:site_name" content="shuxuan&#39;s blog">
-<meta property="og:description" content="串口接收程序设计及调试">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA10.1.bmp">
-<meta property="og:image" content="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA10.2.png">
-<meta property="article:published_time" content="2023-07-18T03:13:01.632Z">
-<meta property="article:modified_time" content="2023-07-18T03:39:24.692Z">
 <meta property="article:author" content="张舒宣">
-<meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA10.1.bmp">
   
     <link rel="alternative" href="/atom.xml" title="shuxuan&#39;s blog" type="application/atom+xml">
   
@@ -159,182 +151,60 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-FPGA笔记/FPGA笔记10" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      FPGA笔记10
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2023" class="archive-year">2023</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2023/12/01/%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA/11%E6%9C%88%E9%A1%B9%E7%9B%AE%E6%97%A5%E5%BF%97/" class="archive-article-date">
+  	<time datetime="2023-12-01T12:49:52.273Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-12-01</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2023/12/01/%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA/11%E6%9C%88%E9%A1%B9%E7%9B%AE%E6%97%A5%E5%BF%97/">11月项目日志</a>
     </h1>
   
 
-        
-        <a href="/2023/07/18/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B010/" class="archive-article-date">
-  	<time datetime="2023-07-18T03:13:01.632Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="串口接收程序设计及调试"><a href="#串口接收程序设计及调试" class="headerlink" title="串口接收程序设计及调试"></a>串口接收程序设计及调试</h1><span id="more"></span>
-
-<h2 id="1-设计思路"><a href="#1-设计思路" class="headerlink" title="1.设计思路"></a>1.设计思路</h2><p><img src="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA10.1.bmp"></p>
-<h2 id="2-设计文件"><a href="#2-设计文件" class="headerlink" title="2.设计文件"></a>2.设计文件</h2><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> uart_byte_rx(</span><br><span class="line">    Clk,</span><br><span class="line">    Reset_n,</span><br><span class="line">    Baud_set,</span><br><span class="line">    uart_rx,</span><br><span class="line">    Data,</span><br><span class="line">    Rx_done</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">input</span> Clk;</span><br><span class="line">    <span class="keyword">input</span> Reset_n;</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">2</span>:<span class="number">0</span>]Baud_set;</span><br><span class="line">    <span class="keyword">input</span> uart_rx;</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> [<span class="number">7</span>:<span class="number">0</span>]Data;</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> Rx_done;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">2</span>:<span class="number">0</span>]sta_bit;<span class="comment">//起始位</span></span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">2</span>:<span class="number">0</span>]sto_bit;<span class="comment">//终止位</span></span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">2</span>:<span class="number">0</span>]r_data[<span class="number">7</span>:<span class="number">0</span>];<span class="comment">//8个数据位</span></span><br><span class="line">    <span class="comment">//新语法 reg width位宽 name number个数</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//边沿检测电路</span></span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">1</span>:<span class="number">0</span>]uart_rx_r;</span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk)<span class="keyword">begin</span></span><br><span class="line">    uart_rx_r[<span class="number">0</span>] &lt;= uart_rx;</span><br><span class="line">    uart_rx_r[<span class="number">1</span>] &lt;= uart_rx_r[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">wire</span> pedge_uart_rx;</span><br><span class="line"><span class="comment">//  assign pedge_uart_rx = ((uart_rx_r[1] == 0) &amp;&amp; (uart_rx_r[0] == 1));</span></span><br><span class="line">    <span class="keyword">assign</span> pedge_uart_rx = (uart_rx_r == <span class="number">2&#x27;b01</span>);    <span class="comment">//上升沿检测</span></span><br><span class="line">    <span class="keyword">wire</span> nedge_uart_rx;</span><br><span class="line"><span class="comment">//  assign nedge_uart_rx = ((uart_rx_r[1] == 1) &amp;&amp; (uart_rx_r[0] == 0));</span></span><br><span class="line">    <span class="keyword">assign</span> nedge_uart_rx = (uart_rx_r == <span class="number">2&#x27;b10</span>);    <span class="comment">//下降沿检测</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">8</span>:<span class="number">0</span>] bps_DR;</span><br><span class="line">    <span class="keyword">always</span>@(*)</span><br><span class="line">        <span class="keyword">case</span>(Baud_set)</span><br><span class="line">            <span class="number">0</span>:bps_DR = <span class="number">1000000000</span>/<span class="number">9600</span>/<span class="number">16</span>/<span class="number">20</span> - <span class="number">1</span>;</span><br><span class="line">            <span class="number">1</span>:bps_DR = <span class="number">1000000000</span>/<span class="number">19200</span>/<span class="number">16</span>/<span class="number">20</span> - <span class="number">1</span>;</span><br><span class="line">            <span class="number">2</span>:bps_DR = <span class="number">1000000000</span>/<span class="number">38400</span>/<span class="number">16</span>/<span class="number">20</span> - <span class="number">1</span>;</span><br><span class="line">            <span class="number">3</span>:bps_DR = <span class="number">1000000000</span>/<span class="number">57600</span>/<span class="number">16</span>/<span class="number">20</span> - <span class="number">1</span>;</span><br><span class="line">            <span class="number">4</span>:bps_DR = <span class="number">1000000000</span>/<span class="number">115200</span>/<span class="number">16</span>/<span class="number">20</span> - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">default</span>: bps_DR = <span class="number">1000000000</span>/<span class="number">9600</span>/<span class="number">16</span>/<span class="number">20</span> - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">     </span><br><span class="line">    <span class="keyword">reg</span> RX_EN;</span><br><span class="line">    <span class="comment">//类似于Send_en，在接收期间时钟为一，在接收结束后拉低</span></span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        RX_EN &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(nedge_uart_rx)</span><br><span class="line">        RX_EN &lt;= <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(Rx_done || (sta_bit &gt;= <span class="number">4</span>))</span><br><span class="line">    <span class="comment">//（sta_bit大于等于4意味着起始位传输错误）</span></span><br><span class="line">        RX_EN &lt;= <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">8</span>:<span class="number">0</span>]div_cnt;</span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        div_cnt &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(RX_EN)<span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span>(div_cnt == bps_DR)</span><br><span class="line">            div_cnt &lt;= <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            div_cnt &lt;= div_cnt + <span class="number">1&#x27;b1</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        div_cnt &lt;= <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">wire</span> bps_clk_16x;</span><br><span class="line">    <span class="keyword">assign</span> bps_clk_16x = (div_cnt == bps_DR/<span class="number">2</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">7</span>:<span class="number">0</span>]bps_cnt;</span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        bps_cnt &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(RX_EN) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span>(bps_clk_16x)<span class="keyword">begin</span></span><br><span class="line">            <span class="keyword">if</span>(bps_cnt == <span class="number">160</span>) </span><br><span class="line">            <span class="comment">//bps_cnt == 160 代表一个字节发送完毕（一个字节10位、一位分为16段）</span></span><br><span class="line">                bps_cnt &lt;= <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">else</span> </span><br><span class="line">                bps_cnt &lt;= bps_cnt + <span class="number">1&#x27;b1</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            bps_cnt &lt;= bps_cnt;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        bps_cnt &lt;= <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)<span class="keyword">begin</span></span><br><span class="line">        sta_bit &lt;= <span class="number">0</span>;</span><br><span class="line">        sto_bit &lt;= <span class="number">0</span>;</span><br><span class="line">        r_data[<span class="number">0</span>] &lt;= <span class="number">0</span>;</span><br><span class="line">        r_data[<span class="number">1</span>] &lt;= <span class="number">0</span>;</span><br><span class="line">        r_data[<span class="number">2</span>] &lt;= <span class="number">0</span>;</span><br><span class="line">        r_data[<span class="number">3</span>] &lt;= <span class="number">0</span>;</span><br><span class="line">        r_data[<span class="number">4</span>] &lt;= <span class="number">0</span>;</span><br><span class="line">        r_data[<span class="number">5</span>] &lt;= <span class="number">0</span>;</span><br><span class="line">        r_data[<span class="number">6</span>] &lt;= <span class="number">0</span>;</span><br><span class="line">        r_data[<span class="number">7</span>] &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(bps_clk_16x)<span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">case</span>(bps_cnt)</span><br><span class="line">            <span class="number">0</span>:<span class="keyword">begin</span></span><br><span class="line">                sta_bit &lt;= <span class="number">0</span>;</span><br><span class="line">                sto_bit &lt;= <span class="number">0</span>;</span><br><span class="line">                r_data[<span class="number">0</span>] &lt;= <span class="number">0</span>;</span><br><span class="line">                r_data[<span class="number">1</span>] &lt;= <span class="number">0</span>;</span><br><span class="line">                r_data[<span class="number">2</span>] &lt;= <span class="number">0</span>;</span><br><span class="line">                r_data[<span class="number">3</span>] &lt;= <span class="number">0</span>;</span><br><span class="line">                r_data[<span class="number">4</span>] &lt;= <span class="number">0</span>;</span><br><span class="line">                r_data[<span class="number">5</span>] &lt;= <span class="number">0</span>;</span><br><span class="line">                r_data[<span class="number">6</span>] &lt;= <span class="number">0</span>;</span><br><span class="line">                r_data[<span class="number">7</span>] &lt;= <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>: sta_bit &lt;= sta_bit + uart_rx;</span><br><span class="line">            <span class="number">21</span><span class="variable">.22</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">26</span>,<span class="number">27</span>: r_data[<span class="number">0</span>] &lt;= r_data[<span class="number">0</span>] + uart_rx;</span><br><span class="line">            <span class="number">37</span>,<span class="number">38</span>,<span class="number">39</span>,<span class="number">40</span>,<span class="number">41</span>,<span class="number">42</span>,<span class="number">43</span>: r_data[<span class="number">1</span>] &lt;= r_data[<span class="number">1</span>] + uart_rx;</span><br><span class="line">            <span class="number">53</span>,<span class="number">54</span>,<span class="number">55</span>,<span class="number">56</span>,<span class="number">57</span>,<span class="number">58</span>,<span class="number">59</span>: r_data[<span class="number">2</span>] &lt;= r_data[<span class="number">2</span>] + uart_rx;</span><br><span class="line">            <span class="number">69</span>,<span class="number">70</span>,<span class="number">71</span>,<span class="number">72</span>,<span class="number">73</span>,<span class="number">74</span>,<span class="number">75</span>: r_data[<span class="number">3</span>] &lt;= r_data[<span class="number">3</span>] + uart_rx;</span><br><span class="line">            <span class="number">85</span>,<span class="number">86</span>,<span class="number">87</span>,<span class="number">88</span>,<span class="number">89</span>,<span class="number">90</span>,<span class="number">91</span>: r_data[<span class="number">4</span>] &lt;= r_data[<span class="number">4</span>] + uart_rx;</span><br><span class="line">            <span class="number">101</span>,<span class="number">102</span>,<span class="number">103</span>,<span class="number">104</span>,<span class="number">105</span>,<span class="number">106</span>,<span class="number">107</span>: r_data[<span class="number">5</span>] &lt;= r_data[<span class="number">5</span>] + uart_rx;</span><br><span class="line">            <span class="number">117</span>,<span class="number">118</span>,<span class="number">119</span>,<span class="number">120</span>,<span class="number">121</span>,<span class="number">122</span>,<span class="number">123</span>: r_data[<span class="number">6</span>] &lt;= r_data[<span class="number">6</span>] + uart_rx;</span><br><span class="line">            <span class="number">133</span>,<span class="number">134</span>,<span class="number">135</span>,<span class="number">136</span>,<span class="number">137</span>,<span class="number">138</span>,<span class="number">139</span>: r_data[<span class="number">7</span>] &lt;= r_data[<span class="number">7</span>] + uart_rx;</span><br><span class="line">            <span class="number">149</span>,<span class="number">150</span>,<span class="number">151</span>,<span class="number">152</span>,<span class="number">153</span>,<span class="number">154</span>,<span class="number">155</span>: sto_bit &lt;= sto_bit + uart_rx;</span><br><span class="line">        <span class="keyword">default</span>:;</span><br><span class="line">    <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        Data &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(bps_clk_16x &amp;&amp; (bps_cnt == <span class="number">159</span>))<span class="keyword">begin</span></span><br><span class="line">        Data[<span class="number">0</span>] &lt;= (r_data[<span class="number">0</span>] &gt;= <span class="number">4</span>)?<span class="number">1&#x27;b1</span>:<span class="number">1&#x27;b0</span>;</span><br><span class="line">        Data[<span class="number">1</span>] &lt;= (r_data[<span class="number">1</span>] &gt;= <span class="number">4</span>)?<span class="number">1&#x27;b1</span>:<span class="number">1&#x27;b0</span>;</span><br><span class="line">        Data[<span class="number">2</span>] &lt;= (r_data[<span class="number">2</span>] &gt;= <span class="number">4</span>)?<span class="number">1&#x27;b1</span>:<span class="number">1&#x27;b0</span>;</span><br><span class="line">        Data[<span class="number">3</span>] &lt;= (r_data[<span class="number">3</span>] &gt;= <span class="number">4</span>)?<span class="number">1&#x27;b1</span>:<span class="number">1&#x27;b0</span>;</span><br><span class="line">        Data[<span class="number">4</span>] &lt;= (r_data[<span class="number">4</span>] &gt;= <span class="number">4</span>)?<span class="number">1&#x27;b1</span>:<span class="number">1&#x27;b0</span>;</span><br><span class="line">        Data[<span class="number">5</span>] &lt;= (r_data[<span class="number">5</span>] &gt;= <span class="number">4</span>)?<span class="number">1&#x27;b1</span>:<span class="number">1&#x27;b0</span>;</span><br><span class="line">        Data[<span class="number">6</span>] &lt;= (r_data[<span class="number">6</span>] &gt;= <span class="number">4</span>)?<span class="number">1&#x27;b1</span>:<span class="number">1&#x27;b0</span>;</span><br><span class="line">        Data[<span class="number">7</span>] &lt;= (r_data[<span class="number">7</span>] &gt;= <span class="number">4</span>)?<span class="number">1&#x27;b1</span>:<span class="number">1&#x27;b0</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">//巧用位操作优化串口接收逻辑设计-</span></span><br><span class="line"><span class="comment">//    always@(posedge Clk or negedge Reset_n)</span></span><br><span class="line"><span class="comment">//    if(!Reset_n)</span></span><br><span class="line"><span class="comment">//        Data &lt;= 0;</span></span><br><span class="line"><span class="comment">//    else if(bps_clk_16x &amp;&amp; (bps_cnt == 159))begin</span></span><br><span class="line"><span class="comment">//        Data[0] &lt;= r_data[0][2];</span></span><br><span class="line"><span class="comment">//        Data[1] &lt;= r_data[1][2];</span></span><br><span class="line"><span class="comment">//        Data[2] &lt;= r_data[2][2];</span></span><br><span class="line"><span class="comment">//        Data[3] &lt;= r_data[3][2];</span></span><br><span class="line"><span class="comment">//        Data[4] &lt;= r_data[4][2];</span></span><br><span class="line"><span class="comment">//        Data[5] &lt;= r_data[5][2];</span></span><br><span class="line"><span class="comment">//        Data[6] &lt;= r_data[6][2];</span></span><br><span class="line"><span class="comment">//        Data[7] &lt;= r_data[7][2];</span></span><br><span class="line"><span class="comment">//    end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        Rx_done &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>((div_cnt == bps_DR/<span class="number">2</span>) &amp;&amp; (bps_cnt == <span class="number">160</span>))</span><br><span class="line">        Rx_done &lt;= <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        Rx_done &lt;= <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="3-仿真文件"><a href="#3-仿真文件" class="headerlink" title="3.仿真文件"></a>3.仿真文件</h2><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> uart_byte_rx_tb();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span> Clk;</span><br><span class="line">    <span class="keyword">reg</span> Reset_n;</span><br><span class="line">    <span class="keyword">wire</span> [<span class="number">2</span>:<span class="number">0</span>]Baud_set;</span><br><span class="line">    <span class="keyword">reg</span> uart_rx;</span><br><span class="line">    <span class="keyword">wire</span> [<span class="number">7</span>:<span class="number">0</span>]Data;</span><br><span class="line">    <span class="keyword">wire</span> Rx_done;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">assign</span> Baud_set = <span class="number">4</span>;</span><br><span class="line">    </span><br><span class="line">    uart_byte_rx uart_byte_rx(</span><br><span class="line">        Clk,</span><br><span class="line">        Reset_n,</span><br><span class="line">        Baud_set,</span><br><span class="line">        uart_rx,</span><br><span class="line">        Data,</span><br><span class="line">        Rx_done</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">initial</span> Clk = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">always</span>#<span class="number">10</span> Clk = ~Clk;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">        Reset_n = <span class="number">0</span>;</span><br><span class="line">        uart_rx = <span class="number">1</span>;</span><br><span class="line">        #<span class="number">201</span>;</span><br><span class="line">        Reset_n = <span class="number">1</span>;</span><br><span class="line">        #<span class="number">200</span>;</span><br><span class="line">        uart_tx_byte(<span class="number">8&#x27;h5a</span>);</span><br><span class="line">        #<span class="number">90000</span>;</span><br><span class="line">        uart_tx_byte(<span class="number">8&#x27;ha5</span>);</span><br><span class="line">        #<span class="number">90000</span>;</span><br><span class="line">        uart_tx_byte(<span class="number">8&#x27;h86</span>);</span><br><span class="line">        #<span class="number">90000</span>;</span><br><span class="line">        <span class="built_in">$stop</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">task</span> uart_tx_byte;</span><br><span class="line">        <span class="keyword">input</span> [<span class="number">7</span>:<span class="number">0</span>]tx_data;</span><br><span class="line">        <span class="keyword">begin</span></span><br><span class="line">            uart_rx = <span class="number">1</span>;</span><br><span class="line">            #<span class="number">20</span>;</span><br><span class="line">            uart_rx = <span class="number">0</span>;</span><br><span class="line">            #<span class="number">8680</span>;</span><br><span class="line">            uart_rx = tx_data[<span class="number">0</span>];</span><br><span class="line">            #<span class="number">8680</span>;</span><br><span class="line">            uart_rx = tx_data[<span class="number">1</span>];</span><br><span class="line">            #<span class="number">8680</span></span><br><span class="line">            uart_rx = tx_data[<span class="number">2</span>];</span><br><span class="line">            #<span class="number">8680</span></span><br><span class="line">            uart_rx = tx_data[<span class="number">3</span>];</span><br><span class="line">            #<span class="number">8680</span></span><br><span class="line">            uart_rx = tx_data[<span class="number">4</span>];</span><br><span class="line">            #<span class="number">8680</span></span><br><span class="line">            uart_rx = tx_data[<span class="number">5</span>];</span><br><span class="line">            #<span class="number">8680</span></span><br><span class="line">            uart_rx = tx_data[<span class="number">6</span>];</span><br><span class="line">            #<span class="number">8680</span></span><br><span class="line">            uart_rx = tx_data[<span class="number">7</span>];</span><br><span class="line">            #<span class="number">8680</span>;</span><br><span class="line">            uart_rx = <span class="number">1</span>;</span><br><span class="line">            #<span class="number">8680</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">endtask</span>            </span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="4-仿真结果"><a href="#4-仿真结果" class="headerlink" title="4.仿真结果"></a>4.仿真结果</h2><p><img src="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA10.2.png"></p>
-<h2 id="5-总结"><a href="#5-总结" class="headerlink" title="5.总结"></a>5.总结</h2><p>串口接收端的设计思路和串口发送的思路整体类似</p>
-<p>不同之处在于，接收端将每位数据又细分为16段，这种操作的目的在于将其中中间8小段进行采样，通过采样结果结合采样规则（概率）来进行高低电平的判断</p>
-<p>使能段RX_EN在接收过程中置1，以起始位的下降沿为触发信号，同时如果起始位的判决不是低电平的情况下，不能触发，在收到Rx_done信号后结束置0</p>
-<p>Baud_set的值决定bps_DR，div_cnt信号计数阈值为bps_DR，设置bps_clk_16x作为bps_cnt的触发信号，每当div_cnt &#x3D;&#x3D; bps_DR&#x2F;2是产生一个时钟周期的bps_clk_16x脉冲，进而触发bps_cnt信号计数，bps_cnt的计数阈值为160，这些信号构成此次设计的时钟系统</p>
-<p>采样和数值寄存的程序实现参见代码</p>
-<p>bps_cnt &#x3D;&#x3D; 160时意味着字节接收完成，此时触发一个时钟周期的Rx_done信号，但在实际调试的过程中bps_cnt &#x3D;&#x3D; 160的时间短，所以修改触发条件为</p>
-<p><code>((div_cnt == bps_DR/2) &amp;&amp; (bps_cnt == 160))</code></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">essay note</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://himmy0830.github.io/2023/07/18/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B010/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2023/07/18/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B011/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          FPGA笔记11
-        
-      </div>
-    </a>
   
   
-    <a href="/2023/07/17/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B09/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">FPGA笔记9</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%B2%E5%8F%A3%E6%8E%A5%E6%94%B6%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%8F%8A%E8%B0%83%E8%AF%95"><span class="toc-number">1.</span> <span class="toc-text">串口接收程序设计及调试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF"><span class="toc-number">1.1.</span> <span class="toc-text">1.设计思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%AE%BE%E8%AE%A1%E6%96%87%E4%BB%B6"><span class="toc-number">1.2.</span> <span class="toc-text">2.设计文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BB%BF%E7%9C%9F%E6%96%87%E4%BB%B6"><span class="toc-number">1.3.</span> <span class="toc-text">3.仿真文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%BB%BF%E7%9C%9F%E7%BB%93%E6%9E%9C"><span class="toc-number">1.4.</span> <span class="toc-text">4.仿真结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%80%BB%E7%BB%93"><span class="toc-number">1.5.</span> <span class="toc-text">5.总结</span></a></li></ol></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -359,9 +229,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
