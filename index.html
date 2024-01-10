@@ -156,115 +156,25 @@
     <article id="post-事件相机/事件相机12月项目日志" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/01/07/%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA/%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA12%E6%9C%88%E9%A1%B9%E7%9B%AE%E6%97%A5%E5%BF%97/">12月项目日志</a>
+    </h1>
+  
+
+        
+        <a href="/2024/01/07/%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA/%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA12%E6%9C%88%E9%A1%B9%E7%9B%AE%E6%97%A5%E5%BF%97/" class="archive-article-date">
+  	<time datetime="2024-01-07T00:07:52.034Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-01-07</time>
+</a>
+        
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="12月项目日志"><a href="#12月项目日志" class="headerlink" title="12月项目日志"></a>12月项目日志</h1><h2 id="12-1"><a href="#12-1" class="headerlink" title="12.1"></a>12.1</h2><p>IBUFDS 介绍<br>IBUFDS 即专用差分输入时钟缓冲器（Dedicated Differential Signaling Input Buffer with Selectable I&#x2F;O Interface）</p>
-<p>IBUFDS：在实验工程中如果需要将差分时钟转换成单端时钟作为全局时钟，需要添加例化此原语。</p>
-<p>IBUFDS是一个输入缓冲器，支持低压差分信号（如LVCMOS、LVDS等）。在IBUFDS中，一个电平接口用两个独特的电平接口（I和IB）表示。一个可以认为是主信号，另外一个可以认为是从信号。主信号和从信号是同一个逻辑信号，但是相位相反。</p>
-<p>———————————————</p>
-<p>OBUFDS 介绍<br>OBUFDS：即差分输出时钟缓冲器（Differential Signaling Output Buffer with Selectable I&#x2F;O Interface），将单端信号转换成差分信号。</p>
-<p>OBUFDS是一个输出缓冲器，支持低压差分信号。OBUFDS隔离出了内电路并向芯片上的信号提供驱动电流。它的输出用O和OB两个独立接口表示。一个可以认为是主信号，另外一个可以认为是从信号。主信号和从信号是同一个逻辑信号，但是相位相反。<br>————————————————<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_61298445/article/details/124391770">https://blog.csdn.net/m0_61298445/article/details/124391770</a></p>
-<p>&#x3D;&#x3D;—————————————————-&#x3D;&#x3D;</p>
-<p>ISERDES&#x2F;OSERDES</p>
-<p><code>ISERDES</code>模块的作用在于实现高速源同步输入数据的串并转换。</p>
-<p><code>OSERDES</code>模块的作用在于实现高速源同步输出数据的并串转换</p>
-<hr>
-<img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/mipi_slave.png" style="zoom: 67%;" />
-
-<hr>
-<p><strong>DDR的配置问题解决：选用型号MT41J256M16 RE-125，effective DRAM为32位，其余保持默认，如果选用其他型号（如128M16），可能在生成硬件平台后运行程序时产生严重错误</strong></p>
-<p><strong>例程运行没有串口输出问题解决：7020板子串口配置应该选择uart1，即MIO口48、49那个，之前用的是uart0</strong></p>
-<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/%25E5%259B%25BE%25E7%2589%25871.png"></p>
-<p><strong>输出打印正常：</strong></p>
-<img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/%25E5%259B%25BE%25E7%2589%25872.png" style="zoom:67%;" />
-
-<hr>
-<p><strong>硬件平台添加了时钟约束，手动将违例的那条时钟的脉冲宽度设置为1.5ns，解决了时序违例的问题，导出了硬件平台</strong></p>
-<p>时钟100MHz、MIPI的line rate为1500Mbps</p>
-<p><strong>使用这个硬件平台成功运行了“hello world”例程</strong></p>
-<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/12.1.png"></p>
-<p>&#x3D;&#x3D;搭建的平台有的路径clock uncertainty值超过0.1，需要留意&#x3D;&#x3D;</p>
-<hr>
-<p><strong>对此硬件平台进行了备份</strong></p>
-<p>接下来的工作：继续测试例程，找完各个模块的测试例程后可以上底板测试</p>
-<h2 id="12-2"><a href="#12-2" class="headerlink" title="12.2"></a>12.2</h2><p><strong>成功根据搭建好的硬件平台完成了lwip网口测试</strong></p>
-<p>新建lwIP Echo Server模板的project，硬件平台选择已经搭建好的，BSP配置成100M速率</p>
-<img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/12.2net.png"  />
-
-<p>编译后运行main函数，串口成功打印信息：</p>
-<img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/12.2uart.png" style="zoom: 80%;" />
-
-<p>&#x3D;&#x3D;关闭电脑防火墙&#x3D;&#x3D;，将电脑的ipv4地址修改成上图中的Gateway网关地址</p>
-<img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/12.2ipv4.png" style="zoom:67%;" />
-
-<p>打开PUTTY进行测试：</p>
-<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/12.2putty%2520cfg.png"></p>
-<img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/12.2putty.png" style="zoom:80%;" />
-
-<p>或者也可以用ping的方式：192.168.1.10和192.168.1.1都可以ping通：</p>
-<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/12.2ping.png"></p>
-<hr>
-<p><strong>搭建实际电路、并成功根据搭建好的硬件平台完成了功能引脚顺序上电；iic、DMA、mipi初始化；和传感器配置测试，均得到正确的打印输出</strong></p>
-<img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/12.2%2520test.png" style="zoom: 67%;" />
-
-<img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/12.2test1.png" style="zoom:67%;" />
-
-<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/12.2csi.png"></p>
-<p>接下来进行debug观察测试，并移植到底板上测试</p>
-<h2 id="12-3"><a href="#12-3" class="headerlink" title="12.3"></a>12.3</h2><p>PLAY DAY</p>
-<h2 id="12-4"><a href="#12-4" class="headerlink" title="12.4"></a>12.4</h2><p><strong>对7020的mipi初始化函数进行debug观察，和7100的debug过程对比发现7020debug过程中高位地址HighAddr一直为0x43c01fff，而不是7100的一直为0x43c01000，这与之前修改程序的思路一致，或许正确的运行过程就应该是这样</strong></p>
-<p>程序运行开始时的配置信息：</p>
-<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/12.4-1.png"></p>
-<p>程序运行到地址计算函数时的配置信息：</p>
-<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/12.4-2.png"></p>
-<p><strong>至于7100软件运行过程中高位地址为什么一直是0x43c01000，没有想到原因，之前猜测是板子的寄存器硬件的问题，现在猜测是不是查找配置信息时出了错</strong></p>
-<p>接下来着手进行把核心板摘到底板上，测试硬件电路，运行各个端口的测试例程，看能不能正常运行</p>
-<h2 id="12-5"><a href="#12-5" class="headerlink" title="12.5"></a>12.5</h2><p><strong>测试底板，核心板连接上后电源可以正常工作，电源指示灯正常，但是发现底板没做扩展口，没法和摄像头的底板连接</strong></p>
-<p><strong>对底板的网口进行测试，lwip例程可以正常运行，cmd可以ping通</strong></p>
-<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/12.5-1.png"></p>
-<p><strong>连接imx646，运行mipi初始化函数，观察debug过程中寄存器变量值变化，和在开发板上运行的结果一致</strong></p>
-<p><strong>结论：底板是好使的，但是没有扩展口，需要重新做，最好再做一个串口</strong></p>
-<h2 id="12-6"><a href="#12-6" class="headerlink" title="12.6"></a>12.6</h2><p><strong>建立最终工程、使用udp_client模板，添加数据发送部分的程序，程序可以运行，但是有异常</strong></p>
-<p>问题在于1440的数据格式和udp_template例程的数据格式基本一样，最开始mipi线疏忽了没接好，一直显示“DMA has been reset”的结果，接好mipi线之后，发现数据包长度1440的问题，尝试修改程序的数据包长的参数，结果不变，分析发现也不应该修改这个</p>
-<img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/12.6.1.png"  />
-
-<h2 id="12-7"><a href="#12-7" class="headerlink" title="12.7"></a>12.7</h2><p><strong>继续昨天的思路向下进行，早上捋了一遍udp的程序，发现了1440数据包长的问题是由于参数没改导致的，改成1024之后程序能正常进行，但是数据还是和昨天一样；继续分析代码，发现数据不变的原因也是出现在代码中，发送数据函数的数据来源没修改，把数据的指针换成缓存器的指针，再次运行程序，程序顺利跑通了，得到了理想的结果</strong></p>
-<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20231207095727808.png" alt="image-20231207095727808"></p>
-<p>运行结果需要动态展示，这里仅放一张无动作时的运行图片</p>
-<img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/12.7.1.jpg" style="zoom:80%;" />
-
-<p>实物图片</p>
-<p><strong>在另一台电脑上运行此程序，也成功运行，说明程序稳定性比较好</strong></p>
-<p><strong>接下来的工作计划：</strong></p>
-<ul>
-<li><p>写一份项目说明书，尽可能详细，把项目涉及到的理论和代码、设计思路和过程、在这个过程中遇到的问题以及如何解决的进行记录，以便后人接手项目可以有参考，自己也在这个过程中温故知新，系统学习一遍项目</p>
-</li>
-<li><p>等老师把底板的扩展口问题解决后，把这个项目再移植到底板上，届时算是结束了整个项目</p>
-</li>
-<li><p>后续再针对相机的指标进行优化、与普通相机结合、固化程序外接显示屏以实现更好地封装项目，让项目横向纵向向优发展</p>
-</li>
-</ul>
-<h2 id="12-13"><a href="#12-13" class="headerlink" title="12.13"></a>12.13</h2><p><strong>在7020B开发板上运行师弟写的io口测试程序，除GND和+5V管教外的6个io均能正常输出预设的不同频率正弦波</strong></p>
-<p>等底板飞线完成后用这个程序测试飞线，测试成功后进行最后的移植</p>
-<p><strong>将老师给的工业摄像头拆解，观察内部结构</strong></p>
-<img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/IMG_1832.JPG" style="zoom: 25%;" />
-<img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/IMG_1823.JPG" style="zoom: 25%;" />
-<img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/IMG_1831.JPG" style="zoom:25%;" />
-<img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/IMG_1830.JPG" style="zoom:25%;" />
-<img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/IMG_1829.JPG" style="zoom:25%;" />
-<img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/IMG_1828.JPG" style="zoom:25%;" />
-<img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/IMG_1826.JPG" style="zoom:25%;" />
-<img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/IMG_1825.JPG" style="zoom:25%;" />
-<img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/IMG_1824.JPG" style="zoom:25%;" />
-
-<h2 id="12-21"><a href="#12-21" class="headerlink" title="12.21"></a>12.21</h2><p><strong>尝试将项目在VITIS上进行固化，根据7020开发板教程s2查看并学习硬件的启动方式（JTAG、SD、QSPI），并尝试进行了一次QSPI固化启动方式，失败</strong></p>
-<p><strong>查找原因，发现是在Vivado搭建硬件时没有配置QSPI和SD的接口，所以在尝试固化时报错显示检测不到QSPI</strong></p>
-<p><strong>SD卡启动时需要先将SD卡格式化，需要一个读卡器</strong></p>
-<h2 id="12-22"><a href="#12-22" class="headerlink" title="12.22"></a>12.22</h2><p><strong>事件相机项目固化成功，现在在QSPI、SD、JTAG下均可以启动</strong></p>
-<p><strong>SD卡固化就是先把SD卡用读卡器连在电脑上进行格式化，再把项目生成的BOOT.bin文件放到SD卡中，最后将开发板设置成SD卡启动方式，上电就自动运行项目，可以在串口看到打印信息</strong></p>
-<p><strong>QSPI固化就是将程序的BOOT.bin文件烧写到核心板的FLASH中，这一步在VITIS中实现，再将开发板的启动模式设置成QSPI启动，上电后程序自动运行，可以在串口看到打印信息</strong></p>
-<p><strong>底板上没有SD卡槽，所以只能在核心板放到底板上之前设置成QSPI启动模式才能实现上电自动运行，这点在后面的工作中需要注意</strong></p>
-
+        <h1 id="12月项目日志"><a href="#12月项目日志" class="headerlink" title="12月项目日志"></a>12月项目日志</h1>
+        
       
 
       
@@ -272,6 +182,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">note</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
