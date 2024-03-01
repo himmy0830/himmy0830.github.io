@@ -6,23 +6,39 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>FPGA笔记8 | shuxuan&#39;s blog</title>
+  <title>gprMAX仿真日志 | shuxuan&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="串口应用之发送数据">
+  <meta name="description" content="1月学习日志">
 <meta property="og:type" content="article">
-<meta property="og:title" content="FPGA笔记8">
-<meta property="og:url" content="http://example.com/2023/07/16/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B08/index.html">
+<meta property="og:title" content="gprMAX仿真日志">
+<meta property="og:url" content="http://example.com/2024/01/10/gprMAX%E9%A1%B9%E7%9B%AE/gprMAX%E4%BB%BF%E7%9C%9F%E9%A1%B9%E7%9B%AE%E6%97%A5%E5%BF%97/index.html">
 <meta property="og:site_name" content="shuxuan&#39;s blog">
-<meta property="og:description" content="串口应用之发送数据">
+<meta property="og:description" content="1月学习日志">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA8.1.png">
-<meta property="og:image" content="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA8.2.png">
-<meta property="article:published_time" content="2023-07-16T13:34:35.828Z">
-<meta property="article:modified_time" content="2023-07-16T13:51:36.262Z">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240112135934259.png">
+<meta property="og:image" content="c:\Users\%E5%BC%A0%E8%88%92%E5%AE%A3\AppData\Roaming\Typora\typora-user-images\image-20240112140003224.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240112143122886.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240112143255238.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240112151248204.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240113125330765.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240113145742337.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240113170213272.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240114100237893.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240114100156486.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240114101632173.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240114152938067.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240115153052494.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240115163218365.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240115163233681.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240118154411949.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240220144711101.png">
+<meta property="og:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240220144737083.png">
+<meta property="article:published_time" content="2024-01-10T05:58:23.145Z">
+<meta property="article:modified_time" content="2024-03-01T06:15:12.139Z">
 <meta property="article:author" content="张舒宣">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA8.1.png">
+<meta name="twitter:image" content="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240112135934259.png">
   
     <link rel="alternative" href="/atom.xml" title="shuxuan&#39;s blog" type="application/atom+xml">
   
@@ -159,37 +175,311 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-FPGA笔记/FPGA笔记8" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-gprMAX项目/gprMAX仿真项目日志" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      FPGA笔记8
+      gprMAX仿真日志
     </h1>
   
 
         
-        <a href="/2023/07/16/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B08/" class="archive-article-date">
-  	<time datetime="2023-07-16T13:34:35.828Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-16</time>
+        <a href="/2024/01/10/gprMAX%E9%A1%B9%E7%9B%AE/gprMAX%E4%BB%BF%E7%9C%9F%E9%A1%B9%E7%9B%AE%E6%97%A5%E5%BF%97/" class="archive-article-date">
+  	<time datetime="2024-01-10T05:58:23.145Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-01-10</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="串口应用之发送数据"><a href="#串口应用之发送数据" class="headerlink" title="串口应用之发送数据"></a>串口应用之发送数据</h1><span id="more"></span>
+        <h1 id="1月学习日志"><a href="#1月学习日志" class="headerlink" title="1月学习日志"></a>1月学习日志</h1><span id="more"></span>
 
-<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1.概述"></a>1.概述</h2><p>每10ms发送一次数据，以Send_Go信号为信号枪，当其拉高时，读取数据并发送</p>
-<h2 id="2-设计文件"><a href="#2-设计文件" class="headerlink" title="2.设计文件"></a>2.设计文件</h2><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> uart_byte_tx(</span><br><span class="line">    Clk,</span><br><span class="line">    Reset_n,</span><br><span class="line">    Data,</span><br><span class="line">    Send_Go,</span><br><span class="line">    uart_tx,</span><br><span class="line">    Tx_done,</span><br><span class="line">    Baud_set</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">input</span> Clk;</span><br><span class="line">    <span class="keyword">input</span> Reset_n;</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">7</span>:<span class="number">0</span>]Data;</span><br><span class="line">    <span class="keyword">input</span> Send_Go;</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">2</span>:<span class="number">0</span>]Baud_set;</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> uart_tx;</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> Tx_done;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">17</span>:<span class="number">0</span>] bps_DR;</span><br><span class="line">    <span class="keyword">always</span>@(*)</span><br><span class="line">        <span class="keyword">case</span>(Baud_set)</span><br><span class="line">            <span class="number">0</span>:bps_DR = <span class="number">1000000000</span>/<span class="number">9600</span>/<span class="number">20</span>;</span><br><span class="line">            <span class="number">1</span>:bps_DR = <span class="number">1000000000</span>/<span class="number">19200</span>/<span class="number">20</span>;</span><br><span class="line">            <span class="number">2</span>:bps_DR = <span class="number">1000000000</span>/<span class="number">38400</span>/<span class="number">20</span>;</span><br><span class="line">            <span class="number">3</span>:bps_DR = <span class="number">1000000000</span>/<span class="number">57600</span>/<span class="number">20</span>;</span><br><span class="line">            <span class="number">4</span>:bps_DR = <span class="number">1000000000</span>/<span class="number">115200</span>/<span class="number">20</span>;</span><br><span class="line">            <span class="keyword">default</span>:bps_DR = <span class="number">1000000000</span>/<span class="number">9600</span>/<span class="number">20</span>;</span><br><span class="line">        <span class="keyword">endcase</span>  </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">reg</span> Send_en;</span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        Send_en &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(Send_Go)</span><br><span class="line">        Send_en &lt;= <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(Tx_done)</span><br><span class="line">        Send_en &lt;= <span class="number">0</span>;  </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">17</span>:<span class="number">0</span>] div_cnt;</span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        div_cnt &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(Send_en)<span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span>(bps_clk)</span><br><span class="line">            div_cnt &lt;= <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            div_cnt &lt;= div_cnt + <span class="number">1&#x27;b1</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">       div_cnt &lt;= <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">wire</span> bps_clk;</span><br><span class="line">    <span class="keyword">assign</span> bps_clk = (div_cnt == bps_DR - <span class="number">1</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">3</span>:<span class="number">0</span>]bps_cnt;</span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        bps_cnt &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(Send_en)<span class="keyword">begin</span> </span><br><span class="line">        <span class="keyword">if</span>(div_cnt == <span class="number">1</span>)<span class="keyword">begin</span> <span class="comment">//有改动</span></span><br><span class="line">            <span class="keyword">if</span>(bps_cnt == <span class="number">11</span>)</span><br><span class="line">                bps_cnt &lt;= <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                bps_cnt &lt;= bps_cnt + <span class="number">1&#x27;b1</span>;</span><br><span class="line">        <span class="keyword">end</span>     </span><br><span class="line">    <span class="keyword">end</span> </span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        bps_cnt &lt;= <span class="number">0</span>;   </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        uart_tx &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">case</span>(bps_cnt)</span><br><span class="line">        <span class="number">1</span>:uart_tx &lt;= <span class="number">0</span>;</span><br><span class="line">        <span class="number">2</span>:uart_tx &lt;= r_Data[<span class="number">0</span>];</span><br><span class="line">        <span class="number">3</span>:uart_tx &lt;= r_Data[<span class="number">1</span>];</span><br><span class="line">        <span class="number">4</span>:uart_tx &lt;= r_Data[<span class="number">2</span>];</span><br><span class="line">        <span class="number">5</span>:uart_tx &lt;= r_Data[<span class="number">3</span>];</span><br><span class="line">        <span class="number">6</span>:uart_tx &lt;= r_Data[<span class="number">4</span>];</span><br><span class="line">        <span class="number">7</span>:uart_tx &lt;= r_Data[<span class="number">5</span>];</span><br><span class="line">        <span class="number">8</span>:uart_tx &lt;= r_Data[<span class="number">6</span>];</span><br><span class="line">        <span class="number">9</span>:uart_tx &lt;= r_Data[<span class="number">7</span>];</span><br><span class="line">        <span class="number">10</span>:uart_tx &lt;= <span class="number">1</span>;</span><br><span class="line">        <span class="number">11</span>:uart_tx &lt;= <span class="number">1</span>; </span><br><span class="line">        <span class="keyword">default</span>: uart_tx &lt;= <span class="number">1</span>;</span><br><span class="line">   <span class="keyword">endcase</span> </span><br><span class="line">   </span><br><span class="line">    <span class="comment">//Tx_done信号设置</span></span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        Tx_done &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>((bps_clk == <span class="number">1</span>) &amp;&amp; (bps_cnt == <span class="number">10</span>))<span class="comment">//这意味着传输结束时刻</span></span><br><span class="line">        Tx_done &lt;= <span class="number">1</span>;    </span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        Tx_done &lt;= <span class="number">0</span>;    </span><br><span class="line"></span><br><span class="line">    <span class="comment">//收到Send_Go信号，从Data读取数据寄存到r_Data中</span></span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">7</span>:<span class="number">0</span>] r_Data;</span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk)</span><br><span class="line">    <span class="keyword">if</span>(Send_Go)</span><br><span class="line">        r_Data &lt;= Data;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        r_Data &lt;= r_Data;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<p>​	<strong>gprMax</strong>是一款用于电磁波传播仿真的开源软件，基于时域有限差分法（Finite-Difference Time-Domain,FDTD）。是学习和仿真探地雷达的利器，在众多期刊论文和学位论文中常常借助它实现探地雷达探测的正演模拟。</p>
+<p>​	<strong>Anaconda</strong>，中文大蟒蛇，是一个开源的Python发行版本，其包含了conda、Python等180多个科学包及其依赖项。理解为便于python使用的编译环境</p>
+<p>​	<strong>pycharm：</strong>和VS code性质差不多，都是python的解释器，只有在电脑中安装了python环境才能使用。如果不安装这种编译器，python只得在cmd里使用，很不方便。</p>
+<h2 id="1-12"><a href="#1-12" class="headerlink" title="1.12"></a>1.12</h2><p>配置gprMax环境，结合chatGPT解决期间遇到的问题</p>
+<p><strong>&#x3D;&#x3D;安装教程：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44385758/article/details/101721599">gprmax 3.0 安装、GPU配置与cmd、pycharm（或jupyter）运行gprmax详细教程_gprmax更新-CSDN博客</a>&#x3D;&#x3D;</strong></p>
+<p><strong>Visual Studio C++2015版本在win11系统上的兼容问题：</strong></p>
+<p>win11不官方支持2015版本，但理论上是兼容的，可以试着修改可执行文件的兼容性来调整</p>
+<p>2019版本不一定适用，相比2015版本的兼容问题，2019可能问题更多</p>
+<p>下载了2015版本，试试能不能行</p>
+<p><strong>VS2015安装结果：</strong></p>
+<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240112135934259.png" alt="image-20240112135934259"></p>
+<p><img src="C:\Users\张舒宣\AppData\Roaming\Typora\typora-user-images\image-20240112140003224.png" alt="image-20240112140003224"></p>
+<p><strong>执行 python setup.py build 指令时出现编解码问题</strong></p>
+<p>解决方法：<a target="_blank" rel="noopener" href="https://blog.csdn.net/marselha/article/details/91872832">关于UnicodeDecodeError: ‘gbk’ codec can’t decode byte的解决办法_unicodedecodeerror: ‘gbk’ codec can’t decode byte -CSDN博客</a></p>
+<p><strong>gprMax安装完成后验证：</strong></p>
+<p>验证语句：<strong>python -m gprMax user_models&#x2F;cylinder_Ascan_2D.in</strong></p>
+<p>验证结果：</p>
+<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240112143122886.png" alt="image-20240112143122886"></p>
+<p>验证语句：<strong>python -m tools.plot_Ascan user_models&#x2F;cylinder_Ascan_2D.out</strong></p>
+<p>验证结果：</p>
+<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240112143255238.png" alt="image-20240112143255238"></p>
+<hr>
+<p><strong>关于gprMax环境状态：</strong></p>
+<p>在 Windows 系统中，通过命令提示符（Command Prompt）或 PowerShell 激活的环境在关闭命令提示符或 PowerShell 窗口后，环境通常会自动关闭。这是因为激活环境通常会设置一些临时环境变量，这些变量只在当前会话中有效。</p>
+<p>激活环境的典型命令如下（以激活 gprMax 环境为例，实际命令可能会有所不同）：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">activate gprMax</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> uart_tx_text(</span><br><span class="line">    Clk,</span><br><span class="line">    Reset_n,</span><br><span class="line">    uart_tx</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">input</span> Clk;</span><br><span class="line">    <span class="keyword">input</span> Reset_n;</span><br><span class="line">    <span class="keyword">output</span> uart_tx;</span><br><span class="line">    </span><br><span class="line">    uart_byte_tx uart_byte_tx(</span><br><span class="line">        <span class="variable">.Clk</span>(Clk),</span><br><span class="line">        <span class="variable">.Reset_n</span>(Reset_n),</span><br><span class="line">        <span class="variable">.Data</span>(Data),</span><br><span class="line">        <span class="variable">.Send_Go</span>(Send_Go),</span><br><span class="line">        <span class="variable">.uart_tx</span>(uart_tx),</span><br><span class="line">        <span class="variable">.Tx_done</span>(Tx_done),</span><br><span class="line">        <span class="variable">.Baud_set</span>(<span class="number">3&#x27;d4</span>)</span><br><span class="line">    );</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//10ms计时器</span></span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">24</span>:<span class="number">0</span>] counter;</span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        counter &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(counter == <span class="number">499999</span>)</span><br><span class="line">        counter &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        counter &lt;= counter + <span class="number">1&#x27;b1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Send_Go配置   </span></span><br><span class="line">    <span class="keyword">reg</span> Send_Go;</span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        Send_Go &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(counter == <span class="number">1</span>)</span><br><span class="line">        Send_Go &lt;= <span class="number">1</span>;</span><br><span class="line">   <span class="keyword">else</span></span><br><span class="line">        Send_Go &lt;= <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">    <span class="comment">//每次传输的数据递增加1</span></span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">7</span>:<span class="number">0</span>]Data;</span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> Clk <span class="keyword">or</span> <span class="keyword">negedge</span> Reset_n)</span><br><span class="line">    <span class="keyword">if</span>(!Reset_n)</span><br><span class="line">        Data &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(Tx_done)   </span><br><span class="line">        Data &lt;= Data + <span class="number">1&#x27;b1</span>;</span><br><span class="line">        </span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<p>上述命令将设置一些环境变量，使得 gprMax 的相关命令和工具在当前命令提示符或 PowerShell 会话中可用。当你关闭该会话时，设置的环境变量通常会被清除，因此环境也就自动关闭了。</p>
+<p>如果你希望在关闭命令提示符或 PowerShell 窗口后仍然保持环境激活，可以考虑使用特定的命令行工具或脚本来启动新的会话。例如，在 PowerShell 中，可以使用 <code>Start-Process</code> 命令启动一个新的窗口，并在其中激活环境：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Start</span>-Process powershell -ArgumentList &#x27;activate gprMax&#x27;</span><br></pre></td></tr></table></figure>
 
-<h2 id="3-仿真文件"><a href="#3-仿真文件" class="headerlink" title="3.仿真文件"></a>3.仿真文件</h2><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> uart_tx_text_tb();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">reg</span> Clk;</span><br><span class="line">    <span class="keyword">reg</span> Reset_n;</span><br><span class="line">    <span class="keyword">wire</span> uart_tx;</span><br><span class="line">    </span><br><span class="line">    uart_tx_text uart_tx_text(</span><br><span class="line">        <span class="variable">.Clk</span>(Clk),</span><br><span class="line">        <span class="variable">.Reset_n</span>(Reset_n),</span><br><span class="line">        <span class="variable">.uart_tx</span>(uart_tx)</span><br><span class="line">    );</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">initial</span> Clk = ~<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">always</span> #<span class="number">10</span> Clk = ~Clk;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">initial</span> <span class="keyword">begin</span> </span><br><span class="line">        Reset_n = <span class="number">0</span>;</span><br><span class="line">        #<span class="number">201</span>;</span><br><span class="line">        Reset_n = <span class="number">1</span>;</span><br><span class="line">        #<span class="number">50000000</span>;</span><br><span class="line">        <span class="built_in">$stop</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<p>请注意，确保系统上已经正确安装并配置了 gprMax，以及激活环境的命令是正确的。上述示例中的命令仅供参考，具体命令可能根据你的环境和配置而有所不同。</p>
+<hr>
+<p><strong>NVIDIA显卡的驱动程序版本为457.49</strong></p>
+<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240112151248204.png" alt="image-20240112151248204"></p>
+<p>根据驱动版本，安装11.1版本的CUDA</p>
+<hr>
+<p>&#x3D;&#x3D;<strong>pip</strong>&#x3D;&#x3D;</p>
+<p>pip 是 Python 的包管理工具，用于安装和管理 Python 包（也称为模块或库）。它是 Python 社区广泛使用的标准包管理工具，使开发者能够轻松地安装、升级和卸载 Python 包。</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">pip install package_name</span><br><span class="line">pip install --upgrade package_name</span><br><span class="line">pip uninstall package_name</span><br><span class="line">pip list</span><br><span class="line">pip search package_name</span><br><span class="line">pip install -r requirements.txt</span><br><span class="line">pip install -r requirements.txt</span><br><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
 
-<h2 id="4-仿真结果"><a href="#4-仿真结果" class="headerlink" title="4.仿真结果"></a>4.仿真结果</h2><p><img src="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA8.1.png"></p>
-<p><img src="https://shuxuan-bucket.oss-cn-beijing.aliyuncs.com/D:%5Cblog%E5%9B%BE%E7%89%87FPGA8.2.png"></p>
+<hr>
+<p><strong>上位机</strong></p>
+<p>上位机是指在分布式控制系统中，负责人机交互、数据处理、监视和控制等高层功能的计算机或设备。在工业自动化和控制系统中，上位机通常是控制系统的一部分，与下位机（如PLC、传感器、执行器等）进行通信，从而实现对系统的监测、调度和控制。</p>
+<p>以下是上位机的一些常见特征和功能：</p>
+<ol>
+<li><strong>人机交互界面：</strong> 上位机通常提供图形用户界面（GUI）或其他形式的人机交互界面，使操作员能够方便地与系统交互。</li>
+<li><strong>数据采集和监控：</strong> 上位机负责从下位机获取实时数据，监测系统的运行状况。这些数据可以包括传感器测量值、设备状态、生产数据等。</li>
+<li><strong>报警和事件处理：</strong> 上位机能够监测系统中的异常状况，并生成相应的报警或事件信息。操作员可以通过上位机及时获知系统的异常情况。</li>
+<li><strong>控制和调度：</strong> 上位机可以向下位机发送控制命令，调整系统的运行参数，实现对整个系统或特定设备的控制。</li>
+<li><strong>历史数据记录：</strong> 上位机通常具有历史数据记录的功能，可以将系统运行的历史数据存储起来，用于分析、报告和优化系统性能。</li>
+<li><strong>通信接口：</strong> 上位机使用各种通信接口与下位机通信，如以太网、串行通信等，以确保及时、可靠的数据交换。</li>
+<li><strong>远程监控和维护：</strong> 上位机允许远程监控和维护系统，使得操作员可以在不同地点远程访问和管理控制系统。</li>
+</ol>
+<p>上位机的设计和功能根据应用领域和系统需求而异，可以用于工业控制、过程自动化、交通管理、能源管理等各种领域。上位机与下位机之间的有效通信和协作对于实现分布式控制系统的高效运行至关重要。</p>
+<hr>
+<p><strong>安装pycuda失败</strong></p>
+<p>猜测原因：指令<code>pip insall pycuda</code>查找到的pycuda版本不正确导致安装失败，明天继续这个思路去解决。</p>
+<h2 id="1-13"><a href="#1-13" class="headerlink" title="1.13"></a>1.13</h2><p><strong>安装pycuda失败的问题得到了解决</strong></p>
+<p>1.12安装失败的原因在于没有重新打开cmd命令提示符，今天重新打开命令提示符之后就成功安装了</p>
+<p>安装成功后的结果如下图：</p>
+<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240113125330765.png" alt="image-20240113125330765"></p>
+<p><strong>运行GPU时报错<code>PyCUDA ERROR: the context stack was not empty upon module cleanup</code></strong></p>
+<p>查阅资料，可能的主要原因PyCUDA的版本不对，安装PyCUDA时自动安装最新版本，也就是2024.1，查找CUDA11.1版本兼容的PyCUDA版本是2021.1，所以可能的原因在于版本不对。</p>
+<p><strong>卸载PyCUDA2024.1版本<code>pip uninstall pycuda</code></strong></p>
+<p>查询PyCUDA的版本cmd指令：<code>pip show pycuda</code></p>
+<p>查询CUDA的版本cmd指令：<code>nvcc --version</code></p>
+<p><strong>尝试安装与CUDA11.1兼容的PyCUDA2021.1版本，再次出现与昨天一样的安装失败的问题</strong></p>
+<p><code>pip install pycuda==2021.1</code></p>
+<p>ERROR: Could not build wheels for pycuda, which is required to install pyproject.toml-based project</p>
+<ul>
+<li><p>尝试重启cmd指令重新安装2021.1，安装失败</p>
+</li>
+<li><p>尝试关闭梯子重新安装2021.1，安装失败</p>
+</li>
+<li><p>关闭梯子的状态下重启cmd重新安装2021.1，安装失败</p>
+</li>
+<li><p>&#x3D;&#x3D;<strong>不重启cmd指令，关闭梯子，重新安装最新版本的pycuda，安装成功</strong>&#x3D;&#x3D;</p>
+</li>
+</ul>
+<p><em>CUDA版本回退的一篇博客</em></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/KD_NO_1/article/details/126285561">ERROR: Could not build wheels for pycuda, which is required to install pyproject.toml-based projects-CSDN博客</a></p>
+<p><strong>根据上面的测试，结合GPT猜测可能的原因：python版本不对，目前的python版本是3.11.1，可能存在不兼容的问题</strong></p>
+<p>沿着这个思路往下进行</p>
+<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240113145742337.png" alt="image-20240113145742337"></p>
+<p><strong>先尝试降低python版本，看看能不能安装pycuda2021.1并启动GPU</strong></p>
+<hr>
+<p>在cmd里头conda卸载python，没咋卸明白，卸完3.11有3.10；卸了3.10之后又来3.11</p>
+<p>新建了一个python3.9的gprMax环境，有一个比较疑惑的点是输入3.9版本建conda环境，建完之后<code>conda info</code>还是显示3.11版本的python，&#x3D;&#x3D;不知道是不是我的查找方式不对&#x3D;&#x3D;。但是这时候还可以成功安装pycuda2021.1版本</p>
+<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240113170213272.png" alt="image-20240113170213272"></p>
+<p>不过好像gprMax没装全，用测试案例得不到昨天的输出，老说缺这个包缺那个包的，手动安装也有一部分安装不了，执行教程的两步安装gprMax的指令，&#x3D;&#x3D;第二条好像有两块连不上网站然后缺包报错&#x3D;&#x3D;，好像是和教程里预判的问题一样。</p>
+<p>明天&#x3D;&#x3D;看看conda环境的python版本怎么查找，再重新建一个python3.9环境，在这个环境重装一下gprMax试试吧。&#x3D;&#x3D;</p>
+<h2 id="1-14"><a href="#1-14" class="headerlink" title="1.14"></a>1.14</h2><p><code>conda env remove --name YourEnvironmentName</code>：移除环境，注意移除环境之前先进行<code>conda deactivate</code>指令</p>
+<p><code>conda env list</code>列出conda中现有的环境，环境名称前面有” * “的代表是现在进行的环境</p>
+<hr>
+<p><strong>更换现有环境的python版本：</strong></p>
+<p>激活现有环境(<code>conda activate myenv</code>)，然后执行<code>conda install python x.x</code>，安装成功后在环境激活状态下查询python版本（python -V）验证一下是否更改成功。</p>
+<hr>
+<p>&#x3D;&#x3D;<strong>安装gprmax相关指令：</strong>&#x3D;&#x3D;</p>
+<p>首先在github上或者通过git指令下载下来gprMax的安装包</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda install git</span><br><span class="line">git clone https://github.com/gprmax/gprMax</span><br></pre></td></tr></table></figure>
+
+<p>导航进入gprMax顶层目录，在这个目录下新建conda环境，并&#x3D;&#x3D;<strong>安装需要需要的包</strong>&#x3D;&#x3D;</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda env create -f conda_env.yml</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装gprMax</strong></p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#安装</span><br><span class="line">python setup.py build</span><br><span class="line">python setup.py install</span><br></pre></td></tr></table></figure>
+
+<p>执行这两条指令，如果没有报缺少包的错误，就是安装成功，可以测试一下</p>
+<p><strong>测试</strong></p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python -m gprMax user_models/cylinder_Ascan_2D.<span class="keyword">in</span></span><br><span class="line">python -m tools.plot_Ascan user_models/cylinder_Ascan_2D.out</span><br></pre></td></tr></table></figure>
+
+<p>测试成功的结果如下：</p>
+<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240114100237893.png" alt="image-20240114100237893"></p>
+<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240114100156486.png" alt="image-20240114100156486"></p>
+<p><strong>到这一步就可以认为gprMax安装完成了，下面就要进行GPU加速部署</strong></p>
+<hr>
+<p>现在的状态：gprMax包下载了，gprMax安装完成，python版本3.9，CUDA安装完成，版本11.1</p>
+<p>接下来安装pycuda2021.1版本，看这套python、CUDA、pycuda版本是否行</p>
+<p><strong>成功安装pycuda2021.1版本</strong></p>
+<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240114101632173.png" alt="image-20240114101632173"></p>
+<p>GPU运行，失败。和原来错误一样，重启后也不行，猜测还是版本不匹配</p>
+<blockquote>
+<p>“Pycuda ERROR: The context stack was not empty upon module cleanup” 这个错误通常与 PyCUDA 使用过程中的资源清理有关。这可能是由于在程序结束时，PyCUDA 检测到在清理 GPU 上下文（context）时堆栈不为空而引发的。</p>
+<p>以下是可能导致这个错误的一些常见原因和解决方法：</p>
+<ol>
+<li><strong>未正确清理 GPU 资源：</strong> 确保你在程序结束时正确地清理了 GPU 资源。这可能涉及到释放内存、关闭 GPU 上下文等。确保你的 PyCUDA 代码在结束时进行了适当的清理操作。</li>
+<li><strong>多线程或多进程使用：</strong> 如果你的代码涉及到多线程或多进程，确保在程序退出时每个线程或进程都正确清理了 GPU 资源。有时，在多线程或多进程环境中，GPU 上下文的管理可能会更加复杂。</li>
+<li><strong>检查 GPU 驱动和 CUDA 版本：</strong> 确保你的系统上安装了与 PyCUDA 版本兼容的 GPU 驱动程序和 CUDA 工具包。有时版本不匹配可能导致一些问题。</li>
+<li><strong>升级 PyCUDA：</strong> 检查你正在使用的 PyCUDA 版本，并考虑升级到最新版本，以获取可能的 bug 修复和改进。</li>
+<li><strong>异常终止或崩溃：</strong> 如果程序异常终止或崩溃，可能会导致 GPU 资源没有得到正确释放。确保你的程序在任何情况下都有合适的退出和清理逻辑。</li>
+</ol>
+<p>在调试这个问题时，可以尝试逐步减小代码规模，以查找是哪一部分代码引发了这个问题。同时，查看 PyCUDA 的官方文档和社区讨论以获取更多有关错误信息和解决方案的信息。</p>
+</blockquote>
+<p><strong>猜测原因：</strong></p>
+<ul>
+<li>大概率还是版本组合不匹配</li>
+<li>编译环境VC++有问题</li>
+</ul>
+<p><strong>解决思路：</strong></p>
+<ul>
+<li>换一套python、CUDA、pycuda的版本组合试试</li>
+<li>更新显卡的驱动版本，试试用一套最新的python、CUDA、pycuda的版本组合</li>
+</ul>
+<hr>
+<p><strong>卸载11.1版本的CUDA、成功安装10.2版本的CUDA</strong></p>
+<p>现在的CUDA版本为10.2、pycuda版本为2021.1、python版本为3.9，<strong>符合表格的匹配关系了</strong></p>
+<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240114152938067.png" alt="image-20240114152938067"></p>
+<p><strong>在这个版本组合下，打开GPU运行，还是失败，报相同的错误信息</strong></p>
+<p>PyCUDA ERROR: The context stack was not empty upon module cleanup.</p>
+<hr>
+<p><strong>猜测编译环境出问题的概率更大些</strong></p>
+<p>接下来的思路：继续查找错误原因</p>
+<hr>
+<p><strong>下载了VS2019，自定义安装MSVC v142和 Windows 10 SDK</strong></p>
+<p>试了一下GPU启动，还是不行。</p>
+<p>将教程<a target="_blank" rel="noopener" href="https://code84.com/829983.html">gprmax3.0安装、GPU加速（cuda）配置、通过python使用gprmax的问题 – 源码巴士 (code84.com)</a>里建议的路径添加到系统变量的path下，重启一下再试试</p>
+<hr>
+<p>还是不行</p>
+<p><strong>接下来思路：</strong></p>
+<p>安装VS2015版本的相关包，添加路径试试</p>
+<p>尝试更新显卡的驱动程序版本，换一套版本组合再试试</p>
+<h2 id="1-15"><a href="#1-15" class="headerlink" title="1.15"></a>1.15</h2><p><strong>问chatGPT为什么不能GPU加速gprMax，其中一条让确认安装的是不是GPU版本的gprMax，循着这个思路往下试试。</strong></p>
+<p>在D:\gprMax\setup.py中添加 use_GPU &#x3D; true 语句，重新执行GPU启动指令，还是不行</p>
+<p><strong>将 CUDA编译器（nvcc）的位置添加到用户&#x3D;&#x3D;路径（path）&#x3D;&#x3D;环境变量中，重启电脑试一下</strong></p>
+<p><strong>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\bin</strong></p>
+<hr>
+<p><strong>将报错整段代码发送给chatGPT，回复如下</strong></p>
+<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240115153052494.png" alt="image-20240115153052494"></p>
+<p>把chatGPT这条指令修改成windows版本，在cmd中执行了一遍，再试试</p>
+<p>还是不行****</p>
+<hr>
+<p><strong>咸鱼咨询了一下，说得重装gprMax，和版本有关</strong></p>
+<hr>
+<p>看了一篇博客，说CUDA的版本非常重要，目前我的对应关系是不正确的，&#x3D;&#x3D;<strong>不知道是gprMax、CUDA、python环境、pycuda以及编译环境中到底哪个版本不对劲。</strong>&#x3D;&#x3D;</p>
+<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240115163218365.png" alt=" "></p>
+<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240115163233681.png" alt="image-20240115163233681"></p>
+<h2 id="1-16"><a href="#1-16" class="headerlink" title="1.16"></a>1.16</h2><p>再次了解了一下GPU加速的CUDA版本相关，发现之前安装的CUDA版本不支持Windows11</p>
+<p><strong>CUDA从11.5.0版本开始才支持Windows11</strong></p>
+<p>基于此猜测，不能启动GPU加速gprMax的原因可能是CUDA版本在操作系统上不匹配</p>
+<p><strong>接下来的操作思路：试着将N卡的驱动程序更新到能安装支持win11的CUDA版本的版本，再试着进行GPU加速，这样的话所有相关的pycuda版本、gprMax环境的python版本对应着应该都要更新，整个环境都应该重新搭建了</strong></p>
+<h2 id="1-18"><a href="#1-18" class="headerlink" title="1.18"></a>1.18</h2><p>Wheel文件（.whl）是Python的一种二进制分发格式，旨在简化Python软件包的安装和分发。这种格式提供了一种更快、更轻松的安装方式，尤其是对于那些需要编译的扩展模块的情况。</p>
+<p>一些Python软件包包含了C语言编写的扩展模块或依赖于其他外部库，它们需要在安装过程中进行编译。在这种情况下，传统的源代码分发（例如.tar.gz或.zip文件）需要在用户的系统上设置相应的编译工具和依赖项，这可能会引起一些麻烦，特别是对于没有开发工具链的用户或在系统上配置较为复杂的情况。</p>
+<p>Wheel文件的作用主要有以下几点：</p>
+<ol>
+<li><strong>快速安装：</strong> 由于Wheel文件是预编译的二进制文件，而不是源代码，因此安装速度更快。这对于包含大量C扩展或其他需要编译的组件的软件包来说尤其重要。</li>
+<li><strong>简化依赖项管理：</strong> Wheel文件可以包含软件包的所有依赖项，这有助于简化依赖项的管理。这使得安装软件包时更容易确保所有必需的组件都被正确安装。</li>
+<li><strong>更好的兼容性：</strong> Wheel文件提供了对多个Python版本和操作系统的支持，这使得它们更具通用性，可以在不同环境中使用。</li>
+</ol>
+<p>在使用<code>pip</code>安装软件包时，如果有可用的Wheel文件，<code>pip</code>通常会首先尝试使用Wheel文件进行安装，以提高安装效率。这就是为什么在使用<code>pip install</code>时，你可能会看到Wheel文件被下载和使用的情况。</p>
+<p><strong>打算删除gprMax环境，试试这个whl文件</strong></p>
+<hr>
+<p><strong>删除现有的gprMax环境，重新安装</strong></p>
+<p>创建新环境，安装python3.9版本</p>
+<p>下载whl文件的方案也行不通，开启下一个方案：更新显卡的驱动程序</p>
+<hr>
+<p><strong>pycuda2022.1 python3.9 CUDA11.6，这套组合还是不行</strong></p>
+<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240118154411949.png" alt="image-20240118154411949"></p>
+<p>不行，pycudaERROR，大概率还是版本对应问题。明天再弄</p>
+<p>明天先查查1650显卡的gprMax的GPU加速的版本组合，看看能不能查到，查不到的话，问问师兄的版本组合，反正现在的驱动程序版本也够用了，用师兄的版本组合再试试</p>
+<h2 id="1-19"><a href="#1-19" class="headerlink" title="1.19"></a>1.19</h2><p>想用师兄的版本组合来GPU加速 CUDA11.8 pycuda2023.1 python3.11 VS2022</p>
+<p>但是CUDA11.8安装失败</p>
+<p>关闭防防火墙，重新安装，安装失败</p>
+<h2 id="1-21"><a href="#1-21" class="headerlink" title="1.21"></a>1.21</h2><p>安装CUDA的11.8和11.7版本，都不能成功安装，安装11.6版本可以安装</p>
+<p>python3.11+CUDA11.6+pycuda2023.1 失败</p>
+<p>python3.9+CUDA11.6+pycuda2022.1  失败</p>
+<h1 id="2月学习日志"><a href="#2月学习日志" class="headerlink" title="2月学习日志"></a>2月学习日志</h1><h2 id="2-20"><a href="#2-20" class="headerlink" title="2.20"></a>2.20</h2><p>在服务器上成功配置gprMax环境，并可以实现GPU加速</p>
+<p>环境存储的路径位于：&#x3D;&#x3D;D:ZSX&#x2F;gprMax&#x2F;gprMax&#x3D;&#x3D;</p>
+<p><strong>配置信息：</strong></p>
+<p>显卡：3080TI     NVIDIA-SMI：546.33   最高支持12.3版本的CUDA    驱动程序版本：546.33</p>
+<p> CUDA版本：11.6     pycuda版本：2023.1    python版本：3.10.9</p>
+<p><strong>环境变量要有：</strong></p>
+<p>CUDA的bin文件夹，类似于：C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.6\bin  放到环境变量中用户变量的path里面</p>
+<p>VS编译器的bin文件夹，类似于：C:\Program Files(x86)\Microsoft Visual Studio <strong>14.0</strong>\VC\bin          放到环境变量中系统变量的path里面</p>
+<p><strong>环境配置教程和相关问题：</strong></p>
+<p>教程：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44385758/article/details/101721599">gprmax 3.0 安装、GPU配置与cmd、pycharm（或jupyter）运行gprmax详细教程_gprmax更新-CSDN博客</a></p>
+<p>python文件编解码问题：</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/marselha/article/details/91872832">关于UnicodeDecodeError: ‘gbk’ codec can’t decode byte的解决办法_unicodedecodeerror: ‘gbk’ codec can’t decode byte -CSDN博客</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wwssgg/p/14536863.html">怎么把文件的编码从UTF-8改为GBK - 信铁寒胜 - 博客园 (cnblogs.com)</a></p>
+</li>
+</ul>
+<p><strong>环境启动使用等的cmd指令：</strong></p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">conda env list</span><br><span class="line">conda env remove --name Yourenvironmentname</span><br><span class="line">conda activate name</span><br><span class="line">conda deactivate</span><br><span class="line">pip install pycuda</span><br><span class="line">pip install pycuda==<span class="number">202</span>X.X</span><br><span class="line">pip show pycuda</span><br><span class="line">nvcc -V</span><br><span class="line">python -V</span><br><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>安装完成后的验证</strong></p>
+<p>python -m gprMax user_models&#x2F;cylinder_Ascan_2D.in<br>python -m tools.plot_Ascan user_models&#x2F;cylinder_Ascan_2D.out</p>
+</blockquote>
+<blockquote>
+<p><strong>使用gpu加速</strong></p>
+<p>python -m gprMax user_models&#x2F;cylinder_Ascan_2D.in -gpu</p>
+<p>用gpu加速就在.in后面加上 -gpu，是否使用gpu加速后的输出界面如下：</p>
+</blockquote>
+<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240220144711101.png" alt="image-20240220144711101"></p>
+<p><img src="https://himmy0830.oss-cn-beijing.aliyuncs.com/images/image-20240220144737083.png" alt="image-20240220144737083"></p>
+<p>执行指令之后，在输入文件所在文件夹下会生成一系列.out文件，随着cmd框中代码执行在文件夹下看到有文件不断产生就说明成功跑成功了</p>
+<h2 id="2-21"><a href="#2-21" class="headerlink" title="2.21"></a>2.21</h2><p>遇到了pycharm环境解释器的问题，anaconda中只有一个python编译器，gprMax环境下面没有python.exe。</p>
+<p>计划选择anaconda3中的python作为解释器：原因是现在这个环境就是以这个python环境为编译器的</p>
+<p><strong>不行，选择重新搭建环境，这次解决了没有环境解释器的问题</strong></p>
+<hr>
+<p><strong>现在的环境配置</strong>：CUDA11.6   python3.11   pycuda2024.1 </p>
+<p><strong>&#x3D;&#x3D;服务器的python解释器（可用）：&#x3D;&#x3D;</strong>   <strong>Python 3.11 （gprMax）</strong> <em>D:\ProgramData\anaconda3\envs\gprMax\python.exe</em></p>
+<blockquote>
+<p>以后用服务器做gprMax的仿真项目就用这个解释器就行</p>
+</blockquote>
+<p><strong>gprMax包位置：</strong> D: ZSX&#x2F;gprMax&#x2F;gprMax</p>
+<hr>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44385758/article/details/107101389">Pycharm运行gprmax3.0具体步骤-CSDN博客</a> 学这篇博客可以直接用 项目文件：D: ZSX&#x2F;gprMax_pycharm_test  来做，代码直接跑，出图就说明环境正确</p>
+<h2 id="2-22"><a href="#2-22" class="headerlink" title="2.22"></a>2.22</h2><p>看懂了脚本的代码，2D3D的都运行成功，接下来设计仿真模型，改写C-scan代码 并运行</p>
+<p>pycharm可以同时运行多个程序，计划生成完长和宽的in文件夹后同时出图</p>
+<h2 id="2-23"><a href="#2-23" class="headerlink" title="2.23"></a>2.23</h2><p><strong>建模一</strong></p>
+<p>2 * 20.2 * 1：太大了，显存需要24G，得改</p>
+<p><strong>建模二</strong></p>
+<p>1.2 * 10.5 * 10.2 ：</p>
+<p>长宽相等，各1.2米，按长度方向和宽度方向各画30条线进行B-scan，每条线间隔3cm</p>
+<p>四种频率，五种深度（0.5 1 2 5 10），共20种场景</p>
+<p>障碍物为长度2cm直径2cm的岩石圆柱体</p>
+<p>共计20 * 30 * 2 &#x3D; 1200张图片，其中每30张图片为一张Cscan，2张Cscan为一组，对应一种场景，共20组</p>
+<p>出图太慢，1小时出两张，理论上10天才能出完</p>
+<p><strong>建模三</strong></p>
+<p>简化场景，在这个建模域下，只做四种频率下障碍物在10m处的场景</p>
+<p>以障碍物中心点为中心，在平面上沿长宽方向各做5条B-scan，每条线间隔3cm</p>
+<p>共计4 * 5 * 2 &#x3D; 40张图片，5张构成一张C-scan，两张C-scan为一组场景，共四组场景</p>
+<p>预计10小时完成</p>
+<p><strong>建模二和建模三均开始仿真</strong></p>
+<p>接下来学习模型图的生成和C-scan的绘制</p>
+<p>验收后，把所有的相关资料总结下来，写一篇教程</p>
+<h2 id="2-24"><a href="#2-24" class="headerlink" title="2.24"></a>2.24</h2><p>回家过十五，服务器显卡掉电</p>
+<h2 id="2-25"><a href="#2-25" class="headerlink" title="2.25"></a>2.25</h2><p>yy发现了显卡掉电，没和我说就给重启了</p>
+<h2 id="2-26"><a href="#2-26" class="headerlink" title="2.26"></a>2.26</h2><p>回到学校，发现模型参数没设错</p>
+<p>结果跑了一半</p>
+<p>接着跑900MHz和1.5GHz的20张图</p>
+<p>跑完剩余的图片做直达波滤除，然后和老师交接结果</p>
+<p>服务器中途自动重启，又得重新开始</p>
+<p>900MHz跑完之后，1.5GHz没能成功开始，报错的大意是建模的网格大小与障碍物大小以及子波波长长度不合规，逐渐调小发射子波频率到1GHz都不行，把网格单元缩小到边长0.005可以跑了，但是时间会非常久，打算先把1.5G这个频率的发射子波场景舍去掉，先看另外三种频率场景下的图片去除直达波后的效果如何</p>
+<p>理论依据：低频用于穿透深度大的情况，高频用于较低的穿透深度和更高的分辨率。</p>
+<p>去除直达波后得不到结果，发现是建模域的网格分辨率不够</p>
+<p>缩小场景，在网格边长0.005米的情况下只进行400Mhz子波频率和10m障碍物深度的仿真，单跑一个方向就需要8GB的显存，预计出一张图就需要5小时</p>
+<p>和老师解释情况，尽量跑出来一两张</p>
+<p>把模型改成了0.5m边长，步进次数也相应的缩小了</p>
+<p>接下来就是按着这个模型尽力跑了，把跑出来的模型做直达波滤除后和老师对接</p>
 
       
 
@@ -259,7 +549,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://himmy0830.github.io/2023/07/16/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B08/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://himmy0830.github.io/2024/01/10/gprMAX%E9%A1%B9%E7%9B%AE/gprMAX%E4%BB%BF%E7%9C%9F%E9%A1%B9%E7%9B%AE%E6%97%A5%E5%BF%97/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -273,18 +563,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2023/07/17/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B09/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2024/02/28/gprMAX%E9%A1%B9%E7%9B%AE/gprMax%E4%BB%BF%E7%9C%9F%E8%AF%B4%E6%98%8E%E4%B9%A6/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          FPGA笔记9
+          gprMax仿真使用指南
         
       </div>
     </a>
   
   
-    <a href="/2023/07/15/FPGA%E7%AC%94%E8%AE%B0/FPGA%E7%AC%94%E8%AE%B07/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">FPGA笔记7</div>
+    <a href="/2024/01/10/%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA/%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA1%E6%9C%88%E9%A1%B9%E7%9B%AE%E6%97%A5%E5%BF%97/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">事件相机1月项目日志</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -311,7 +601,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%B2%E5%8F%A3%E5%BA%94%E7%94%A8%E4%B9%8B%E5%8F%91%E9%80%81%E6%95%B0%E6%8D%AE"><span class="toc-number">1.</span> <span class="toc-text">串口应用之发送数据</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%A6%82%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">1.概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%AE%BE%E8%AE%A1%E6%96%87%E4%BB%B6"><span class="toc-number">1.2.</span> <span class="toc-text">2.设计文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BB%BF%E7%9C%9F%E6%96%87%E4%BB%B6"><span class="toc-number">1.3.</span> <span class="toc-text">3.仿真文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%BB%BF%E7%9C%9F%E7%BB%93%E6%9E%9C"><span class="toc-number">1.4.</span> <span class="toc-text">4.仿真结果</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%E6%9C%88%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97"><span class="toc-number">1.</span> <span class="toc-text">1月学习日志</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-12"><span class="toc-number">1.1.</span> <span class="toc-text">1.12</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-13"><span class="toc-number">1.2.</span> <span class="toc-text">1.13</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-14"><span class="toc-number">1.3.</span> <span class="toc-text">1.14</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-15"><span class="toc-number">1.4.</span> <span class="toc-text">1.15</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-16"><span class="toc-number">1.5.</span> <span class="toc-text">1.16</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-18"><span class="toc-number">1.6.</span> <span class="toc-text">1.18</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-19"><span class="toc-number">1.7.</span> <span class="toc-text">1.19</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-21"><span class="toc-number">1.8.</span> <span class="toc-text">1.21</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2%E6%9C%88%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97"><span class="toc-number">2.</span> <span class="toc-text">2月学习日志</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-20"><span class="toc-number">2.1.</span> <span class="toc-text">2.20</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-21"><span class="toc-number">2.2.</span> <span class="toc-text">2.21</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-22"><span class="toc-number">2.3.</span> <span class="toc-text">2.22</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-23"><span class="toc-number">2.4.</span> <span class="toc-text">2.23</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-24"><span class="toc-number">2.5.</span> <span class="toc-text">2.24</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-25"><span class="toc-number">2.6.</span> <span class="toc-text">2.25</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-26"><span class="toc-number">2.7.</span> <span class="toc-text">2.26</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
